@@ -1,0 +1,31 @@
+{
+  "name": "xiaomi-smarter-living-experience",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive cinematic virtual walkthrough of the Xiaomi Smarter Living Media Event",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@react-three/drei": "10.0.7",
+    "@react-three/fiber": "9.1.2",
+    "@react-three/postprocessing": "^3.0.4",
+    "framer-motion": "^12.42.2",
+    "gsap": "3.13.0",
+    "next": "15.3.3",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "three": "0.176.0",
+    "zustand": "5.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.21",
+    "@types/react": "19.1.5",
+    "@types/react-dom": "19.1.5",
+    "@types/three": "0.176.0",
+    "typescript": "5.8.3"
+  }
+}

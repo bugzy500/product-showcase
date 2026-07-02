@@ -1,0 +1,948 @@
+{
+  "event": {
+    "title": "Xiaomi Smarter Living",
+    "subtitle": "Media Event · Virtual Walkthrough",
+    "ledWallText": "XIAOMI SMARTER LIVING MEDIA EVENT",
+    "welcome": [
+      "Welcome to Xiaomi's Smarter Living Experience.",
+      "Discover today's launches and tomorrow's innovations."
+    ],
+    "entryHint": "Scroll to walk through the venue",
+    "textAnimation": "fade"
+  },
+  "zones": [
+    {
+      "id": "climate",
+      "chapter": "Zone 01",
+      "name": "Climate Comfort Experience",
+      "tagline": "Air that understands you",
+      "description": "A premium living room bathed in natural daylight, where Mijia air conditioning adapts silently to every person in the room. Feel the difference between wind and natural wind.",
+      "talkingPoints": [
+        "Human-feeling dual air outlets follow occupants in real time",
+        "Super first-class energy efficiency across the range",
+        "AI climate control learns household comfort patterns"
+      ],
+      "accent": "#5EC8F2",
+      "effect": "airflow",
+      "environment": "livingroom",
+      "textAnimation": "slide",
+      "products": [
+        {
+          "id": "ac-fresh-air-pro",
+          "name": "Fresh Air Pro Human-Feeling Dual Air Outlet Vertical 3 HP Super First-Class Energy Efficiency Mijia Air Conditioner",
+          "shortName": "Fresh Air Pro Vertical 3 HP",
+          "model": "ac-vertical",
+          "tagline": "Dual outlets. Human-feeling airflow.",
+          "description": "A vertical 3 HP flagship that senses where people are and shapes two independent air streams around them — cooling the room, never the person.",
+          "specs": [
+            "3 HP vertical unit",
+            "Dual human-feeling air outlets",
+            "Super first-class energy efficiency",
+            "Fresh-air intake with active purification",
+            "Mijia app + voice ecosystem control"
+          ],
+          "notes": "Presenter: run the dual-outlet demo — one stream to the sofa, one to the dining area.",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/ac-fresh-air-pro/0.png",
+            "/products/ac-fresh-air-pro/1.png",
+            "/products/ac-fresh-air-pro/2.jpg",
+            "/products/ac-fresh-air-pro/3.jpg",
+            "/products/ac-fresh-air-pro/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=1230803798"
+        },
+        {
+          "id": "ac-natural-wind",
+          "name": "Natural Wind 1.5 HP New First-Class Energy Efficiency Mijia Air Conditioner",
+          "shortName": "Natural Wind 1.5 HP AC",
+          "model": "ac-split",
+          "tagline": "Wind the way nature makes it",
+          "description": "Thousands of micro-holes break the airflow into a soft, breeze-like flow — cooling that feels like a window opened onto a hillside, not a machine.",
+          "specs": [
+            "1.5 HP split unit",
+            "Micro-perforated natural wind panel",
+            "New first-class energy efficiency",
+            "0.1°C temperature stability",
+            "Whisper mode · 18 dB(A)"
+          ],
+          "notes": "Presenter: hero unit of the zone. Invite media to feel both airflow modes.",
+          "video": null,
+          "highlighted": true,
+          "amazon": {
+            "price": "₹34,999",
+            "mrp": "₹46,999",
+            "rating": 4.5,
+            "reviews": 1284,
+            "badge": "Launch Offer"
+          },
+          "images": [
+            "/products/ac-natural-wind/0.png",
+            "/products/ac-natural-wind/1.png",
+            "/products/ac-natural-wind/2.png",
+            "/products/ac-natural-wind/3.jpg",
+            "/products/ac-natural-wind/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=1230801177"
+        },
+        {
+          "id": "ac-eco",
+          "name": "Mijia Air Conditioner Eco 5.7W (Global)",
+          "shortName": "Mijia AC Eco 5.7W",
+          "model": "ac-split",
+          "tagline": "Global efficiency benchmark",
+          "description": "The global Eco series pairs ultra-low standby consumption with intelligent inverter control for markets that demand efficiency first.",
+          "specs": [
+            "Global Eco series",
+            "5.7 W ultra-low standby",
+            "Full DC inverter",
+            "R32 refrigerant",
+            "Matter-ready connectivity"
+          ],
+          "notes": "Presenter: emphasise global rollout and efficiency certification.",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/ac-eco/0.webp",
+            "/products/ac-eco/1.webp",
+            "/products/ac-eco/2.webp",
+            "/products/ac-eco/3.webp",
+            "/products/ac-eco/4.webp",
+            "/products/ac-eco/5.webp"
+          ],
+          "link": "https://www.mi.com/global/product/bundle/mijia-air-conditioner-eco-5-2-kw/"
+        },
+        {
+          "id": "ac-top-airflow",
+          "name": "Mi Home Air Conditioner Pro with Top Airflow, 1.5 HP",
+          "shortName": "Mi Home AC Pro Top Airflow",
+          "model": "ac-split",
+          "tagline": "Cool from above, comfort all around",
+          "description": "Top-mounted airflow washes cool air across the ceiling before it settles gently — no cold drafts, only even, quiet comfort.",
+          "specs": [
+            "1.5 HP",
+            "Top airflow architecture",
+            "Coanda-effect ceiling wash",
+            "Self-cleaning evaporator",
+            "Mi Home ecosystem control"
+          ],
+          "notes": "Presenter: show the ceiling-wash airflow visualisation.",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/ac-top-airflow/0.png",
+            "/products/ac-top-airflow/1.png",
+            "/products/ac-top-airflow/2.jpg",
+            "/products/ac-top-airflow/3.jpg",
+            "/products/ac-top-airflow/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=20527"
+        }
+      ]
+    },
+    {
+      "id": "laundry",
+      "chapter": "Zone 02",
+      "name": "Laundry Experience",
+      "tagline": "Care, engineered",
+      "description": "A luxury laundry room where drums turn like watch movements. Three-zone washing, steam care and AI programs treat every fabric as it deserves.",
+      "talkingPoints": [
+        "Three-zone washing separates family laundry hygienically",
+        "Ultra Clean wash-and-dry finishes a full load in one cycle",
+        "AI programs weigh, sense and dose automatically"
+      ],
+      "accent": "#7FE0D4",
+      "effect": "laundry",
+      "environment": "laundry",
+      "textAnimation": "stagger",
+      "products": [
+        {
+          "id": "washer-threezone",
+          "name": "Mijia Three-Zone Washing Machine Pro Drum 10kg Small Cylinder Dryer",
+          "shortName": "Three-Zone Washer Pro 10kg",
+          "model": "washer-tower",
+          "tagline": "Three zones. Zero compromise.",
+          "description": "Main drum, mini drum and a small-cylinder dryer stacked into one tower — adults' wear, baby clothes and delicates each get their own zone.",
+          "specs": [
+            "10 kg main drum + mini drum",
+            "Integrated small-cylinder dryer",
+            "99.99% high-temp sterilisation",
+            "Independent zone programs",
+            "Mijia app orchestration"
+          ],
+          "notes": "Presenter: open all three zones to show hygienic separation.",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/washer-threezone/0.png",
+            "/products/washer-threezone/1.png",
+            "/products/washer-threezone/2.jpg",
+            "/products/washer-threezone/3.jpg",
+            "/products/washer-threezone/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=1230804980"
+        },
+        {
+          "id": "washer-drum-10-gray",
+          "name": "Mijia Washing Machine Drum 10kg Gray",
+          "shortName": "Mijia Drum Washer 10kg",
+          "model": "washer",
+          "tagline": "The everyday flagship",
+          "description": "A 10 kg direct-drive drum in warm graphite gray — balanced, quiet and intelligent enough to choose its own program.",
+          "specs": [
+            "10 kg drum capacity",
+            "Direct-drive quiet motor",
+            "AI load sensing & auto dosing",
+            "24 professional programs",
+            "Graphite Gray finish"
+          ],
+          "notes": "Presenter: hero unit — run the transparent-drum rotation demo.",
+          "video": null,
+          "highlighted": true,
+          "amazon": {
+            "price": "₹28,999",
+            "mrp": "₹37,999",
+            "rating": 4.4,
+            "reviews": 2210,
+            "badge": "New Launch"
+          },
+          "images": [
+            "/products/washer-drum-10-gray/0.jpg",
+            "/products/washer-drum-10-gray/1.jpg",
+            "/products/washer-drum-10-gray/2.jpg",
+            "/products/washer-drum-10-gray/3.jpg",
+            "/products/washer-drum-10-gray/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=23411"
+        },
+        {
+          "id": "washer-ultraclean",
+          "name": "Mijia Washing Machine Ultra Clean Washing & Drying 10kg Silver Ash",
+          "shortName": "Ultra Clean Wash & Dry 10kg",
+          "model": "washer-silver",
+          "tagline": "Wash. Dry. Done.",
+          "description": "Ultra Clean deep-wash technology and gentle heat-pump drying in one Silver Ash column — laundry leaves ready to wear.",
+          "specs": [
+            "10 kg wash / 7 kg dry",
+            "Ultra Clean micro-bubble wash",
+            "Steam refresh & sterilisation",
+            "Heat-pump low-temp drying",
+            "Silver Ash premium finish"
+          ],
+          "notes": "Presenter: demo steam-care animation, mention wrinkle reduction.",
+          "video": null,
+          "highlighted": true,
+          "amazon": {
+            "price": "₹42,999",
+            "mrp": "₹54,999",
+            "rating": 4.6,
+            "reviews": 864,
+            "badge": "Launch Offer"
+          },
+          "images": [
+            "/products/washer-ultraclean/0.png",
+            "/products/washer-ultraclean/1.png",
+            "/products/washer-ultraclean/2.jpg",
+            "/products/washer-ultraclean/3.jpg",
+            "/products/washer-ultraclean/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=1230802752"
+        },
+        {
+          "id": "washer-mini-dual",
+          "name": "Mijia Mini Dual Zone Washing & Drying Machine",
+          "shortName": "Mini Dual Zone Washer-Dryer",
+          "model": "washer-mini",
+          "tagline": "Small footprint, two worlds",
+          "description": "Two independent mini zones wash and dry separately — underwear and baby clothes never share water.",
+          "specs": [
+            "Dual independent mini drums",
+            "Wash + dry in each zone",
+            "High-temp sterilisation",
+            "Wall-mount or counter install"
+          ],
+          "notes": "Presenter: position as the nursery / master-bath companion.",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/washer-mini-dual/0.png",
+            "/products/washer-mini-dual/1.png",
+            "/products/washer-mini-dual/2.jpg",
+            "/products/washer-mini-dual/3.jpg",
+            "/products/washer-mini-dual/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=1230807256"
+        },
+        {
+          "id": "washer-mini",
+          "name": "Mijia Mini Washing Machine",
+          "shortName": "Mijia Mini Washer",
+          "model": "washer-mini",
+          "tagline": "Dedicated care for delicates",
+          "description": "A compact drum for the garments that matter most — gentle cycles, high-temperature hygiene, tiny footprint.",
+          "specs": [
+            "3 kg compact drum",
+            "95°C sterilisation wash",
+            "Delicates & baby-care programs",
+            "38 dB(A) quiet operation"
+          ],
+          "notes": "",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/washer-mini/0.png",
+            "/products/washer-mini/1.png",
+            "/products/washer-mini/2.jpg",
+            "/products/washer-mini/3.jpg",
+            "/products/washer-mini/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=1230804592"
+        }
+      ]
+    },
+    {
+      "id": "kitchen",
+      "chapter": "Zone 03",
+      "name": "Smart Kitchen",
+      "tagline": "Freshness, by design",
+      "description": "A premium modular kitchen where refrigeration disappears into the architecture. Micro-chilled zones, dual systems and flat-embedded design keep food at its peak.",
+      "talkingPoints": [
+        "560L French flat-embedded design sits flush with cabinetry",
+        "Micro-chilled dual system holds meat at −0.5°C without freezing",
+        "Smart storage recognises and tracks freshness"
+      ],
+      "accent": "#F2B75E",
+      "effect": "kitchen",
+      "environment": "kitchen",
+      "textAnimation": "fade",
+      "products": [
+        {
+          "id": "fridge-560",
+          "name": "Mijia Refrigerator Pro Micro Chilled Dual System French Flat Embedded 560L",
+          "shortName": "Fridge Pro 560L French Embedded",
+          "model": "fridge-french",
+          "tagline": "Architecture-grade refrigeration",
+          "description": "560 litres behind a flat-embedded French door that sits perfectly flush with kitchen cabinetry. Dual cooling systems and micro-chilled storage keep ingredients a breath above freezing.",
+          "specs": [
+            "560 L French four-door",
+            "Flat flush-embedded install",
+            "Micro-chilled −0.5°C zone",
+            "Dual independent cooling systems",
+            "Smart inventory sensing"
+          ],
+          "notes": "Presenter: hero unit — open doors via app on stage, show flush embed.",
+          "video": null,
+          "highlighted": true,
+          "amazon": {
+            "price": "₹89,999",
+            "mrp": "₹1,09,999",
+            "rating": 4.7,
+            "reviews": 412,
+            "badge": "Flagship"
+          },
+          "images": [
+            "/products/fridge-560/0.png",
+            "/products/fridge-560/1.png",
+            "/products/fridge-560/2.jpg",
+            "/products/fridge-560/3.jpg",
+            "/products/fridge-560/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=1230804802"
+        },
+        {
+          "id": "fridge-icefresh",
+          "name": "Mijia Refrigerator Pro Micro Ice Fresh",
+          "shortName": "Fridge Pro Micro Ice Fresh",
+          "model": "fridge-french",
+          "tagline": "The freshness of first frost",
+          "description": "Micro Ice Fresh technology wraps produce in a whisper of cold mist, extending peak freshness for days without freezing a single cell.",
+          "specs": [
+            "Micro Ice Fresh chamber",
+            "Cold-mist humidity control",
+            "Pro dual-system cooling",
+            "Antibacterial air loop"
+          ],
+          "notes": "Presenter: pair with the cold-mist visual demo.",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/fridge-icefresh/0.png",
+            "/products/fridge-icefresh/1.png",
+            "/products/fridge-icefresh/2.jpg",
+            "/products/fridge-icefresh/3.jpg",
+            "/products/fridge-icefresh/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=10050149"
+        },
+        {
+          "id": "fridge-cross",
+          "name": "Mijia Refrigerator French & Cross Inlay",
+          "shortName": "Fridge French & Cross Inlay",
+          "model": "fridge-cross",
+          "tagline": "Two doors, four ways",
+          "description": "French and cross-door configurations in a single inlay design language — refrigeration that adapts to the kitchen, not the other way round.",
+          "specs": [
+            "French & cross-door variants",
+            "Inlay cabinetry design",
+            "Multi-zone temperature control",
+            "Mijia ecosystem scenes"
+          ],
+          "notes": "",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/fridge-cross/0.png",
+            "/products/fridge-cross/1.png",
+            "/products/fridge-cross/2.jpg",
+            "/products/fridge-cross/3.jpg",
+            "/products/fridge-cross/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=10050153"
+        },
+        {
+          "id": "fridge-threedoor",
+          "name": "Mijia Refrigerator Three Door Series",
+          "shortName": "Fridge Three Door Series",
+          "model": "fridge-threedoor",
+          "tagline": "Essential freshness",
+          "description": "The accessible entry into Mijia refrigeration — three doors, precise zones and quiet inverter cooling for everyday families.",
+          "specs": [
+            "Three-door layout",
+            "Independent crisper zone",
+            "Quiet inverter compressor",
+            "Frost-free operation"
+          ],
+          "notes": "",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/fridge-threedoor/0.png",
+            "/products/fridge-threedoor/1.png",
+            "/products/fridge-threedoor/2.jpg",
+            "/products/fridge-threedoor/3.jpg",
+            "/products/fridge-threedoor/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=10050143"
+        }
+      ]
+    },
+    {
+      "id": "cleaning",
+      "chapter": "Zone 04",
+      "name": "Smart Cleaning",
+      "tagline": "Clean happens by itself",
+      "description": "A modern home where cleaning is ambient. Robots map, vacuums float, and dust simply stops existing.",
+      "talkingPoints": [
+        "LiDAR mapping covers a full home in minutes",
+        "4 Max suction lifts embedded dust from deep carpet",
+        "Robot Vacuum & Mop 6 Pro washes and re-dries its own mops"
+      ],
+      "accent": "#B99CF2",
+      "effect": "cleaning",
+      "environment": "home",
+      "textAnimation": "slide",
+      "products": [
+        {
+          "id": "vacuum-4max",
+          "name": "Cordless Vacuum Cleaner 4 Max",
+          "shortName": "Cordless Vacuum 4 Max",
+          "model": "vacuum-stick",
+          "tagline": "Max suction, zero cords",
+          "description": "A featherweight stick vacuum with flagship suction and a smart display that shows exactly how clean your floor just became.",
+          "specs": [
+            "180 AW max suction",
+            "Smart dust-sensing display",
+            "Up to 90 min runtime",
+            "5-stage HEPA filtration"
+          ],
+          "notes": "Presenter: carpet deep-clean demo with particle visual.",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/vacuum-4max/0.png",
+            "/products/vacuum-4max/1.png",
+            "/products/vacuum-4max/2.jpg",
+            "/products/vacuum-4max/3.jpg",
+            "/products/vacuum-4max/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=1230808090"
+        },
+        {
+          "id": "vacuum-car",
+          "name": "Car Vacuum Cleaner",
+          "shortName": "Car Vacuum Cleaner",
+          "model": "vacuum-car",
+          "tagline": "Showroom-clean, always",
+          "description": "Palm-sized power for the cabin — crevice-deep suction that lives in the glovebox.",
+          "specs": [
+            "Compact in-car form factor",
+            "13,000 Pa suction",
+            "USB-C fast charging",
+            "Washable HEPA filter"
+          ],
+          "notes": "",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/vacuum-car/0.png",
+            "/products/vacuum-car/1.png",
+            "/products/vacuum-car/2.jpg",
+            "/products/vacuum-car/3.jpg",
+            "/products/vacuum-car/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=1230803939"
+        },
+        {
+          "id": "vacuum-robot6pro",
+          "name": "Robot Vacuum & Mop 6 Pro",
+          "shortName": "Robot Vacuum & Mop 6 Pro",
+          "model": "vacuum-robot",
+          "tagline": "It maps. It mops. It manages itself.",
+          "description": "LiDAR navigation, dual spinning mops and a base station that empties, washes and dries — the floor takes care of itself.",
+          "specs": [
+            "LiDAR + AI obstacle avoidance",
+            "12,000 Pa suction",
+            "Dual rotating mop pads",
+            "Self-empty, self-wash, self-dry base"
+          ],
+          "notes": "Presenter: live mapping demo on the zone floor.",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/vacuum-robot6pro/0.png",
+            "/products/vacuum-robot6pro/1.png",
+            "/products/vacuum-robot6pro/2.jpg",
+            "/products/vacuum-robot6pro/3.jpg",
+            "/products/vacuum-robot6pro/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=10050174"
+        }
+      ]
+    },
+    {
+      "id": "entertainment",
+      "chapter": "Zone 05",
+      "name": "Entertainment",
+      "tagline": "The room becomes the cinema",
+      "description": "A luxury entertainment lounge built around one screen. Mini LED brightness, cinematic colour and the whole Xiaomi ecosystem on one remote.",
+      "talkingPoints": [
+        "Mini LED backlight with thousands of dimming zones",
+        "Dolby Vision + Atmos cinematic pipeline",
+        "The TV is the control centre of the smart home"
+      ],
+      "accent": "#F2695E",
+      "effect": "cinema",
+      "environment": "lounge",
+      "textAnimation": "scale",
+      "products": [
+        {
+          "id": "tv-miniled",
+          "name": "Xiaomi Mini LED TV",
+          "shortName": "Xiaomi Mini LED TV",
+          "model": "tv",
+          "tagline": "Light, mastered",
+          "description": "Thousands of Mini LED zones deliver searing highlights and true blacks, while the Xiaomi ecosystem turns the largest screen in the home into its brain.",
+          "specs": [
+            "4K Mini LED panel",
+            "1200+ local dimming zones",
+            "144 Hz gaming mode",
+            "Dolby Vision IQ · Atmos",
+            "Smart-home control hub"
+          ],
+          "notes": "Presenter: lights-down demo reel, then ecosystem dashboard.",
+          "video": null,
+          "highlighted": true,
+          "amazon": {
+            "price": "₹59,999",
+            "mrp": "₹79,999",
+            "rating": 4.5,
+            "reviews": 1930,
+            "badge": "New Launch"
+          },
+          "images": [
+            "/products/tv-miniled/0.png",
+            "/products/tv-miniled/1.png",
+            "/products/tv-miniled/2.jpg",
+            "/products/tv-miniled/3.png",
+            "/products/tv-miniled/4.jpg",
+            "/products/tv-miniled/5.png"
+          ],
+          "link": "https://www.mi.com/global/product/xiaomi-tv-s-mini-led-75-2026/"
+        }
+      ]
+    },
+    {
+      "id": "aircare",
+      "chapter": "Zone 06",
+      "name": "Air Care",
+      "tagline": "Watch the air become clean",
+      "description": "The hero installation. Two purifiers stand inside sealed glass chambers thick with haze. Activate them, and pollution visibly dissolves into cool, clean light.",
+      "talkingPoints": [
+        "The demo says it without words: haze in, fresh air out",
+        "Purifier 6 covers large living areas with real-time AQI display",
+        "4 Compact brings the same air science to bedrooms and desks"
+      ],
+      "accent": "#5EF2C8",
+      "effect": "purifier",
+      "environment": "gallery",
+      "textAnimation": "dissolve",
+      "products": [
+        {
+          "id": "purifier-6",
+          "name": "Xiaomi Air Purifier 6",
+          "shortName": "Air Purifier 6",
+          "model": "purifier-tower",
+          "tagline": "Clean air, visible",
+          "description": "Flagship purification with a true-HEPA core, real-time laser particle sensing and coverage for the largest room in the house.",
+          "specs": [
+            "600 m³/h CADR",
+            "True HEPA H13 + carbon",
+            "Laser PM0.3 sensing",
+            "OLED AQI display",
+            "22 dB(A) night mode"
+          ],
+          "notes": "Presenter: trigger the chamber demo — do not narrate, let it play.",
+          "video": null,
+          "highlighted": true,
+          "amazon": {
+            "price": "₹14,999",
+            "mrp": "₹19,999",
+            "rating": 4.6,
+            "reviews": 3105,
+            "badge": "Bestseller"
+          },
+          "images": [
+            "/products/purifier-6/0.png",
+            "/products/purifier-6/1.png",
+            "/products/purifier-6/2.jpg",
+            "/products/purifier-6/3.jpg",
+            "/products/purifier-6/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=22147"
+        },
+        {
+          "id": "purifier-4compact",
+          "name": "Xiaomi Air Purifier 4 Compact",
+          "shortName": "Air Purifier 4 Compact",
+          "model": "purifier-compact",
+          "tagline": "Small tower. Big lungs.",
+          "description": "The same purification science, sized for bedrooms, nurseries and desks — quiet enough to forget, effective enough to notice.",
+          "specs": [
+            "230 m³/h CADR",
+            "HEPA + activated carbon",
+            "Ambient AQI light ring",
+            "Sleep mode 20 dB(A)"
+          ],
+          "notes": "",
+          "video": null,
+          "highlighted": true,
+          "amazon": {
+            "price": "₹6,999",
+            "mrp": "₹9,999",
+            "rating": 4.4,
+            "reviews": 5220,
+            "badge": "Value Pick"
+          },
+          "images": [
+            "/products/purifier-4compact/1.jpg",
+            "/products/purifier-4compact/2.png",
+            "/products/purifier-4compact/3.png",
+            "/products/purifier-4compact/5.png"
+          ],
+          "link": "https://www.mi.com/global/product/xiaomi-smart-air-purifier-4-compact/"
+        }
+      ]
+    },
+    {
+      "id": "power",
+      "chapter": "Zone 07",
+      "name": "Portable Power",
+      "tagline": "Energy, everywhere",
+      "description": "A charging laboratory where power banks float in fields of light — magnetic attachment, laptop-class wattage and energy you can see flowing.",
+      "talkingPoints": [
+        "Qi2.2 magnetic wireless at up to 25 W",
+        "165 W output charges laptops at full speed",
+        "Ultra Thin MagSafe disappears behind the phone"
+      ],
+      "accent": "#F2A65E",
+      "effect": "power",
+      "environment": "lab",
+      "textAnimation": "stagger",
+      "products": [
+        {
+          "id": "pb-qi22",
+          "name": "10,000mAh Qi2.2 Wireless / Wired Power Bank",
+          "shortName": "10,000mAh Qi2.2 Power Bank",
+          "model": "powerbank-qi",
+          "tagline": "Snap on. Power up.",
+          "description": "Qi2.2 magnetic wireless charging meets wired fast charge in one pocketable slab of matte aluminium.",
+          "specs": [
+            "10,000 mAh",
+            "Qi2.2 magnetic wireless 25 W",
+            "45 W wired USB-C",
+            "Aluminium unibody"
+          ],
+          "notes": "Presenter: magnetic snap demo on the floating phone.",
+          "video": null,
+          "highlighted": true,
+          "amazon": {
+            "price": "₹3,499",
+            "mrp": "₹4,499",
+            "rating": 4.5,
+            "reviews": 980,
+            "badge": "New Launch"
+          }
+        },
+        {
+          "id": "pb-165w",
+          "name": "Xiaomi Power Bank 20,000mAh 165W",
+          "shortName": "Power Bank 20,000mAh 165W",
+          "model": "powerbank",
+          "tagline": "Laptop-class power, pocket-class size",
+          "description": "165 watts of total output — enough to fast-charge a laptop, a phone and earbuds at once, with a live power display.",
+          "specs": [
+            "20,000 mAh",
+            "165 W total output",
+            "100 W single-port USB-C",
+            "Digital power display"
+          ],
+          "notes": "Presenter: show simultaneous laptop + phone charging.",
+          "video": null,
+          "highlighted": true,
+          "amazon": {
+            "price": "₹5,999",
+            "mrp": "₹7,999",
+            "rating": 4.6,
+            "reviews": 1450,
+            "badge": "Launch Offer"
+          },
+          "images": [
+            "/products/pb-165w/0.png",
+            "/products/pb-165w/1.png",
+            "/products/pb-165w/2.png",
+            "/products/pb-165w/3.png",
+            "/products/pb-165w/4.png"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=1230805584"
+        },
+        {
+          "id": "pb-ultrathin",
+          "name": "Ultra Thin MagSafe 5000mAh",
+          "shortName": "Ultra Thin MagSafe 5000mAh",
+          "model": "powerbank-thin",
+          "tagline": "So thin it vanishes",
+          "description": "A wafer of energy that clicks to the back of the phone and disappears into the hand.",
+          "specs": [
+            "5,000 mAh",
+            "7.8 mm ultra-thin body",
+            "MagSafe-compatible magnets",
+            "Pass-through charging"
+          ],
+          "notes": "",
+          "video": null,
+          "highlighted": true,
+          "amazon": {
+            "price": "₹2,799",
+            "mrp": "₹3,499",
+            "rating": 4.3,
+            "reviews": 640,
+            "badge": "New Launch"
+          },
+          "images": [
+            "/products/pb-ultrathin/0.png",
+            "/products/pb-ultrathin/1.png",
+            "/products/pb-ultrathin/2.jpg",
+            "/products/pb-ultrathin/3.png"
+          ],
+          "link": "https://www.mi.com/global/product/xiaomi-ultrathin-magnetic-power-bank-5000-15w/"
+        },
+        {
+          "id": "pb-67w",
+          "name": "20,000mAh 67W",
+          "shortName": "Power Bank 20,000mAh 67W",
+          "model": "powerbank",
+          "tagline": "The dependable workhorse",
+          "description": "Two full phone weeks of energy with 67 W fast output — the bag essential.",
+          "specs": [
+            "20,000 mAh",
+            "67 W fast output",
+            "Triple-port charging",
+            "12-layer safety"
+          ],
+          "notes": "",
+          "video": null,
+          "highlighted": false
+        },
+        {
+          "id": "pb-212w",
+          "name": "25,000mAh 212W",
+          "shortName": "Power Bank 25,000mAh 212W",
+          "model": "powerbank",
+          "tagline": "A power station in your palm",
+          "description": "212 watts across three devices — the bank that charges the chargers.",
+          "specs": [
+            "25,000 mAh",
+            "212 W total output",
+            "140 W single-port max",
+            "Flight-safe capacity"
+          ],
+          "notes": "",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/pb-212w/1.png",
+            "/products/pb-212w/2.jpg",
+            "/products/pb-212w/3.png"
+          ],
+          "link": "https://www.mi.com/global/product/xiaomi-212w-hypercharge-power-bank-25000/"
+        }
+      ]
+    },
+    {
+      "id": "lifestyle",
+      "chapter": "Zone 08",
+      "name": "Lifestyle",
+      "tagline": "Smart living, in hand",
+      "description": "Products shown in life, not on shelves — a desk mid-thought, a morning routine, a look through intelligent glass.",
+      "talkingPoints": [
+        "Smart Pen Fountain 2 digitises ink as you write",
+        "AI Glasses bring the assistant into your field of view",
+        "Personal care joins the same ecosystem as the home"
+      ],
+      "accent": "#F2D65E",
+      "effect": "lifestyle",
+      "environment": "studio",
+      "textAnimation": "fade",
+      "products": [
+        {
+          "id": "pen-fountain2",
+          "name": "Xiaomi Smart Pet Fountain 2",
+          "shortName": "Smart Pet Fountain 2",
+          "model": "petfountain",
+          "tagline": "Fresh water, happy pets",
+          "description": "A quiet, filtered water fountain that keeps pets drinking healthy — app-monitored water levels, filter life tracking and a whisper-quiet pump.",
+          "specs": [
+            "3 L circulating reservoir",
+            "Quadruple filtration system",
+            "Whisper-quiet 28 dB(A) pump",
+            "Mi Home app water & filter alerts",
+            "Dry-run pump protection"
+          ],
+          "notes": "Presenter: live demo with the water-level window facing the audience.",
+          "video": null,
+          "highlighted": true,
+          "amazon": {
+            "price": "₹8,999",
+            "mrp": "₹11,999",
+            "rating": 4.4,
+            "reviews": 356,
+            "badge": "New Launch"
+          },
+          "images": [
+            "/products/pen-fountain2/1.jpg",
+            "/products/pen-fountain2/2.png",
+            "/products/pen-fountain2/4.png",
+            "/products/pen-fountain2/5.png"
+          ],
+          "link": "https://www.mi.com/global/product/xiaomi-smart-pet-fountain2/"
+        },
+        {
+          "id": "hairdryer-pro",
+          "name": "Hair Dryer Pro",
+          "shortName": "Hair Dryer Pro",
+          "model": "hairdryer",
+          "tagline": "Salon physics, home ritual",
+          "description": "High-speed airflow with intelligent heat cycling that dries fast and never scorches.",
+          "specs": [
+            "110,000 rpm motor",
+            "57°C intelligent heat lock",
+            "Magnetic styling nozzles",
+            "Ion care airflow"
+          ],
+          "notes": "",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/hairdryer-pro/0.png",
+            "/products/hairdryer-pro/1.png",
+            "/products/hairdryer-pro/2.jpg",
+            "/products/hairdryer-pro/3.jpg",
+            "/products/hairdryer-pro/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=24248"
+        },
+        {
+          "id": "toothbrush-pro",
+          "name": "Sonic Toothbrush Pro",
+          "shortName": "Sonic Toothbrush Pro",
+          "model": "toothbrush",
+          "tagline": "31,000 gentle decisions a minute",
+          "description": "Sonic precision with pressure sensing and app-guided coverage maps.",
+          "specs": [
+            "31,000 vpm sonic motor",
+            "Pressure-sensing smart ring",
+            "Coverage map in Mi Home",
+            "90-day battery"
+          ],
+          "notes": "",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/toothbrush-pro/0.png",
+            "/products/toothbrush-pro/1.png",
+            "/products/toothbrush-pro/2.jpg",
+            "/products/toothbrush-pro/3.png",
+            "/products/toothbrush-pro/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=1230803240"
+        },
+        {
+          "id": "ai-glasses",
+          "name": "Xiaomi AI Glasses",
+          "shortName": "Xiaomi AI Glasses",
+          "model": "glasses",
+          "tagline": "See what the assistant sees",
+          "description": "Lightweight frames with an AI assistant, camera and open-ear audio — the ecosystem, worn.",
+          "specs": [
+            "On-frame AI assistant",
+            "12 MP first-person camera",
+            "Open-ear spatial audio",
+            "All-day 40 g frame"
+          ],
+          "notes": "Presenter: first-person capture demo on the zone screen.",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/ai-glasses/0.png",
+            "/products/ai-glasses/1.png",
+            "/products/ai-glasses/2.png",
+            "/products/ai-glasses/3.png",
+            "/products/ai-glasses/4.png"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=21399"
+        }
+      ]
+    }
+  ],
+  "finale": {
+    "chapter": "Grand Finale",
+    "title": "One Ecosystem. One Home.",
+    "tagline": "Everything you just experienced, working as one",
+    "description": "Every product from tonight's showcase converges into a single living ecosystem — sensing, cooling, cleaning, entertaining and caring in concert.",
+    "textAnimation": "scale"
+  },
+  "amazon": {
+    "enabled": true,
+    "chapter": "Available Now",
+    "title": "From the venue to your home",
+    "subtitle": "Tonight's highlighted launches, live on Amazon India",
+    "journey": [
+      "Experience",
+      "Learn",
+      "Buy"
+    ],
+    "note": "Product listing is configurable — set \"highlighted\": true and an \"amazon\" block on any product in this file.",
+    "textAnimation": "slide"
+  }
+}

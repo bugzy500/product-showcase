@@ -66,7 +66,7 @@ export function ZoneCaptions() {
       caption = (
         <motion.aside
           key={key}
-          className="caption caption-center"
+          className="caption caption-center caption-finale"
           exit={{ opacity: 0, transition: { duration: 0.35 } }}
         >
           <Reveal anim={anim}>
@@ -82,6 +82,21 @@ export function ZoneCaptions() {
             <Line anim={anim} className="caption-desc">
               {content.finale.description}
             </Line>
+            {content.finale.closing && (
+              <>
+                <Line anim={anim}>
+                  <div className="caption-divider" />
+                </Line>
+                {content.finale.closingTitle && (
+                  <Line anim={anim} className="caption-closing-title">
+                    {content.finale.closingTitle}
+                  </Line>
+                )}
+                <Line anim={anim} className="caption-closing">
+                  {content.finale.closing}
+                </Line>
+              </>
+            )}
           </Reveal>
         </motion.aside>
       );

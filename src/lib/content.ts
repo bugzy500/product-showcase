@@ -28,6 +28,14 @@ export interface Product {
   images?: string[];
   /** Official product page on mi.com. */
   link?: string;
+  /** Pods layout: how this unit is displayed. */
+  mount?: "wall" | "floor";
+  /** Pods layout: pod/station name. */
+  pod?: string;
+  /** Pods layout: pod theme line. */
+  podTheme?: string;
+  /** Pods layout: primary feature chips. */
+  podFeatures?: string[];
 }
 
 export interface Zone {
@@ -40,8 +48,16 @@ export interface Zone {
   accent: string;
   effect: string;
   environment: string;
+  /** "pods" renders the zone as separate experience pods (Climate). */
+  layout?: string;
   textAnimation?: TextAnimation;
   products: Product[];
+}
+
+export interface SnapshotItem {
+  icon: string;
+  label: string;
+  value: string;
 }
 
 export interface ExperienceContent {
@@ -49,9 +65,18 @@ export interface ExperienceContent {
     title: string;
     subtitle: string;
     ledWallText: string;
-    welcome: string[];
     entryHint: string;
     textAnimation?: TextAnimation;
+    intro: {
+      kicker: string;
+      heading: string;
+      subheading: string;
+      body: string[];
+      snapshot: {
+        title: string;
+        items: SnapshotItem[];
+      };
+    };
   };
   zones: Zone[];
   finale: {
@@ -59,6 +84,8 @@ export interface ExperienceContent {
     title: string;
     tagline: string;
     description: string;
+    closingTitle?: string;
+    closing?: string;
     textAnimation?: TextAnimation;
   };
   amazon: {

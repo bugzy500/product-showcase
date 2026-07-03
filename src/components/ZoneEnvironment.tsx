@@ -19,6 +19,7 @@ import { glowTexture, ledTextTexture } from "@/src/lib/textures";
 import { ProductDisplay } from "./ProductDisplay";
 import { ZoneEffect } from "./effects";
 import { EnvironmentProps } from "./props";
+import { ClimatePods } from "./ClimatePods";
 
 const platformMat = new THREE.MeshStandardMaterial({ color: "#d6d8dc", roughness: 0.55, metalness: 0.1 });
 
@@ -73,6 +74,27 @@ export function ZoneEnvironment({ zone, index }: { zone: Zone; index: number }) 
 
   return (
     <group ref={group}>
+      {zone.layout === "pods" ? (
+        <>
+          <pointLight
+            ref={light}
+            position={[side * (PLATFORM_X - 0.8), 4.6, zc]}
+            color={zone.accent}
+            distance={20}
+            intensity={0}
+          />
+          <pointLight
+            ref={fillLight}
+            position={[side * 3.5, 4.4, zc]}
+            color="#fff1dd"
+            distance={18}
+            intensity={0}
+          />
+          <ZoneEffect effect={zone.effect} zoneIndex={index} accent={zone.accent} side={side} zc={zc} />
+          <ClimatePods zone={zone} index={index} />
+        </>
+      ) : (
+      <>
       {/* display platform */}
       <mesh position={[side * PLATFORM_X, 0.07, zc]} material={platformMat}>
         <boxGeometry args={[6.2, 0.14, depth]} />
@@ -140,6 +162,8 @@ export function ZoneEnvironment({ zone, index }: { zone: Zone; index: number }) 
       {products.map((p, i) => (
         <ProductDisplay key={p.id} product={p} slot={slots[i]} />
       ))}
+      </>
+      )}
     </group>
   );
 }

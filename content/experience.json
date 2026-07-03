@@ -3,12 +3,26 @@
     "title": "Xiaomi Smarter Living",
     "subtitle": "Media Event · Virtual Walkthrough",
     "ledWallText": "XIAOMI SMARTER LIVING MEDIA EVENT",
-    "welcome": [
-      "Welcome to Xiaomi's Smarter Living Experience.",
-      "Discover today's launches and tomorrow's innovations."
-    ],
-    "entryHint": "Scroll to walk through the venue",
-    "textAnimation": "fade"
+    "entryHint": "Scroll to enter the venue",
+    "intro": {
+      "kicker": "Smarter Living Media Event · 2026",
+      "heading": "Smarter Living Media Event 2026",
+      "subheading": "Building the Future of AIoT in India",
+      "body": [
+        "As part of Xiaomi India's H2 2026 AIoT strategy, we are hosting an exclusive Smarter Living Media Event to unveil our latest premium AIoT innovations while showcasing Xiaomi's long-term vision for the future of smart living.",
+        "This media-exclusive experiential showcase goes beyond a traditional product launch. Through immersive product demonstrations, intelligent home experiences, and ecosystem storytelling, the event is designed to strengthen Xiaomi's leadership in AIoT while enabling media partners to experience how our connected ecosystem enhances everyday living."
+      ],
+      "snapshot": {
+        "title": "Event Snapshot",
+        "items": [
+          { "icon": "📅", "label": "Tentative Date", "value": "25 August 2026" },
+          { "icon": "📍", "label": "Location", "value": "Delhi" },
+          { "icon": "💰", "label": "Budget", "value": "INR 30,00,000" },
+          { "icon": "👥", "label": "Audience", "value": "Media & Technology Journalists" },
+          { "icon": "🎯", "label": "Format", "value": "Closed-Door Experiential Showcase" }
+        ]
+      }
+    }
   },
   "zones": [
     {
@@ -25,39 +39,18 @@
       "accent": "#5EC8F2",
       "effect": "airflow",
       "environment": "livingroom",
+      "layout": "pods",
       "textAnimation": "slide",
       "products": [
-        {
-          "id": "ac-fresh-air-pro",
-          "name": "Fresh Air Pro Human-Feeling Dual Air Outlet Vertical 3 HP Super First-Class Energy Efficiency Mijia Air Conditioner",
-          "shortName": "Fresh Air Pro Vertical 3 HP",
-          "model": "ac-vertical",
-          "tagline": "Dual outlets. Human-feeling airflow.",
-          "description": "A vertical 3 HP flagship that senses where people are and shapes two independent air streams around them — cooling the room, never the person.",
-          "specs": [
-            "3 HP vertical unit",
-            "Dual human-feeling air outlets",
-            "Super first-class energy efficiency",
-            "Fresh-air intake with active purification",
-            "Mijia app + voice ecosystem control"
-          ],
-          "notes": "Presenter: run the dual-outlet demo — one stream to the sofa, one to the dining area.",
-          "video": null,
-          "highlighted": false,
-          "images": [
-            "/products/ac-fresh-air-pro/0.png",
-            "/products/ac-fresh-air-pro/1.png",
-            "/products/ac-fresh-air-pro/2.jpg",
-            "/products/ac-fresh-air-pro/3.jpg",
-            "/products/ac-fresh-air-pro/4.jpg"
-          ],
-          "link": "https://www.mi.com/shop/buy/detail?product_id=1230803798"
-        },
         {
           "id": "ac-natural-wind",
           "name": "Natural Wind 1.5 HP New First-Class Energy Efficiency Mijia Air Conditioner",
           "shortName": "Natural Wind 1.5 HP AC",
-          "model": "ac-split",
+          "model": "ac-wall",
+          "mount": "wall",
+          "pod": "Natural Wind Lab",
+          "podTheme": "Experience Air That Feels Natural",
+          "podFeatures": ["Natural Wind", "Human Comfort", "Gentle Cooling"],
           "tagline": "Wind the way nature makes it",
           "description": "Thousands of micro-holes break the airflow into a soft, breeze-like flow — cooling that feels like a window opened onto a hillside, not a machine.",
           "specs": [
@@ -87,10 +80,44 @@
           "link": "https://www.mi.com/shop/buy/detail?product_id=1230801177"
         },
         {
+          "id": "ac-top-airflow",
+          "name": "Mi Home Air Conditioner Pro with Top Airflow, 1.5 HP",
+          "shortName": "Mi Home AC Pro Top Airflow",
+          "model": "ac-wall",
+          "mount": "wall",
+          "pod": "Living Room Comfort Zone",
+          "podTheme": "Experience Comfort, Not Direct Cooling",
+          "podFeatures": ["Top Airflow", "Uniform Cooling", "Human Comfort"],
+          "tagline": "Cool from above, comfort all around",
+          "description": "Top-mounted airflow washes cool air across the ceiling before it settles gently — no cold drafts, only even, quiet comfort.",
+          "specs": [
+            "1.5 HP",
+            "Top airflow architecture",
+            "Coanda-effect ceiling wash",
+            "Self-cleaning evaporator",
+            "Mi Home ecosystem control"
+          ],
+          "notes": "Presenter: show the ceiling-wash airflow visualisation.",
+          "video": null,
+          "highlighted": false,
+          "images": [
+            "/products/ac-top-airflow/0.png",
+            "/products/ac-top-airflow/1.png",
+            "/products/ac-top-airflow/2.jpg",
+            "/products/ac-top-airflow/3.jpg",
+            "/products/ac-top-airflow/4.jpg"
+          ],
+          "link": "https://www.mi.com/shop/buy/detail?product_id=20527"
+        },
+        {
           "id": "ac-eco",
           "name": "Mijia Air Conditioner Eco 5.7W (Global)",
           "shortName": "Mijia AC Eco 5.7W",
-          "model": "ac-split",
+          "model": "ac-wall",
+          "mount": "wall",
+          "pod": "AI Energy Studio",
+          "podTheme": "Smarter Cooling Through AI",
+          "podFeatures": ["AI Energy Saving", "Smart Home Integration", "Energy Efficiency"],
           "tagline": "Global efficiency benchmark",
           "description": "The global Eco series pairs ultra-low standby consumption with intelligent inverter control for markets that demand efficiency first.",
           "specs": [
@@ -114,30 +141,34 @@
           "link": "https://www.mi.com/global/product/bundle/mijia-air-conditioner-eco-5-2-kw/"
         },
         {
-          "id": "ac-top-airflow",
-          "name": "Mi Home Air Conditioner Pro with Top Airflow, 1.5 HP",
-          "shortName": "Mi Home AC Pro Top Airflow",
-          "model": "ac-split",
-          "tagline": "Cool from above, comfort all around",
-          "description": "Top-mounted airflow washes cool air across the ceiling before it settles gently — no cold drafts, only even, quiet comfort.",
+          "id": "ac-fresh-air-pro",
+          "name": "Fresh Air Pro Human-Feeling Dual Air Outlet Vertical 3 HP Super First-Class Energy Efficiency Mijia Air Conditioner",
+          "shortName": "Fresh Air Pro Vertical 3 HP",
+          "model": "ac-vertical",
+          "mount": "floor",
+          "pod": "Grand Cooling Arena",
+          "podTheme": "Built for Large Spaces",
+          "podFeatures": ["Dual Air Outlet", "Large Area Cooling", "Human-Feeling Airflow"],
+          "tagline": "Dual outlets. Human-feeling airflow.",
+          "description": "A vertical 3 HP flagship that senses where people are and shapes two independent air streams around them — cooling the room, never the person.",
           "specs": [
-            "1.5 HP",
-            "Top airflow architecture",
-            "Coanda-effect ceiling wash",
-            "Self-cleaning evaporator",
-            "Mi Home ecosystem control"
+            "3 HP vertical unit",
+            "Dual human-feeling air outlets",
+            "Super first-class energy efficiency",
+            "Fresh-air intake with active purification",
+            "Mijia app + voice ecosystem control"
           ],
-          "notes": "Presenter: show the ceiling-wash airflow visualisation.",
+          "notes": "Presenter: run the dual-outlet demo — one stream to the sofa, one to the dining area.",
           "video": null,
           "highlighted": false,
           "images": [
-            "/products/ac-top-airflow/0.png",
-            "/products/ac-top-airflow/1.png",
-            "/products/ac-top-airflow/2.jpg",
-            "/products/ac-top-airflow/3.jpg",
-            "/products/ac-top-airflow/4.jpg"
+            "/products/ac-fresh-air-pro/0.png",
+            "/products/ac-fresh-air-pro/1.png",
+            "/products/ac-fresh-air-pro/2.jpg",
+            "/products/ac-fresh-air-pro/3.jpg",
+            "/products/ac-fresh-air-pro/4.jpg"
           ],
-          "link": "https://www.mi.com/shop/buy/detail?product_id=20527"
+          "link": "https://www.mi.com/shop/buy/detail?product_id=1230803798"
         }
       ]
     },
@@ -930,6 +961,8 @@
     "title": "One Ecosystem. One Home.",
     "tagline": "Everything you just experienced, working as one",
     "description": "Every product from tonight's showcase converges into a single living ecosystem — sensing, cooling, cleaning, entertaining and caring in concert.",
+    "closingTitle": "Why This Showcase Matters",
+    "closing": "While not every product showcased is intended for launch in India, each has been carefully curated to demonstrate the depth of Xiaomi's global AIoT ecosystem and our long-term vision for smart living. This showcase is designed to strengthen Xiaomi's premium innovation perception, reinforce our technology leadership, and inspire meaningful media storytelling that extends beyond individual product launches.",
     "textAnimation": "scale"
   },
   "amazon": {

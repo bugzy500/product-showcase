@@ -18,6 +18,13 @@ function usePoints(count: number, color: string, size: number, opacity = 0.8) {
   const geometry = useMemo(() => {
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(count * 3), 3));
+    // Positions are rewritten every frame in useFrame, but three only computes
+    // the boundingSphere once — from the initial all-zero buffer, giving a
+    // radius-0 sphere at the world origin. Since the zones sit far down -z, that
+    // origin sphere is off-screen and three frustum-culls the entire cloud, so
+    // nothing renders. Pin a large sphere so the points are never wrongly culled
+    // (distant zones are already hidden by the zone-level visibility gate).
+    g.boundingSphere = new THREE.Sphere(new THREE.Vector3(0, 0, 0), 1e4);
     return g;
   }, [count]);
   const material = useMemo(
@@ -45,18 +52,23 @@ const activity = (zoneIndex: number) => zoneActivity(liveState.smoothProgress, z
 /* Zone 1 — Climate: natural wind streams                            */
 /* ---------------------------------------------------------------- */
 
-function AirflowEffect({ zoneIndex, accent, side, zc }: EffectProps) {
+function AirflowEffect({ zoneIndex, accent, side }: EffectProps) {
   const N = 260;
   const { geometry, material } = usePoints(N, accent, 0.09, 0.65);
+  // Bind each particle to a real product slot so a jet of air streams out of
+  // every AC pod. Fixed lanes only covered the middle of the zone, leaving the
+  // end pods with no airflow; slot-based origins scale to any pod count.
+  const slots = useMemo(() => productSlots(zoneIndex), [zoneIndex]);
   const seeds = useMemo(
     () =>
       Array.from({ length: N }, (_, i) => ({
         t: (i / N) % 1,
-        lane: i % 4,
+        slot: i % slots.length,
+        zoff: (Math.random() - 0.5) * 3.4,
         phase: Math.random() * Math.PI * 2,
         speed: 0.1 + Math.random() * 0.12,
       })),
-    []
+    [slots.length]
   );
   useFrame(({ clock }) => {
     const a = activity(zoneIndex);
@@ -66,11 +78,14 @@ function AirflowEffect({ zoneIndex, accent, side, zc }: EffectProps) {
     const time = clock.elapsedTime;
     for (let i = 0; i < N; i++) {
       const s = seeds[i];
+      const base = slots[s.slot].position;
       const t = (s.t + time * s.speed) % 1;
-      const originZ = zc + (s.lane - 1.5) * 3.1;
+      // Keep the original plume trajectory (streams from the platform edge out
+      // toward the walkway, where it reads clearly), but anchor each lane's z to
+      // a real pod so every AC — including the end pods — gets a stream.
       const x = side * (PLATFORM_X - 0.5) - side * t * 6.2;
       const y = 1.6 + Math.sin(t * Math.PI * 2 + s.phase) * 0.35 - t * 0.5;
-      const z = originZ + Math.sin(t * 9 + s.phase) * 0.5;
+      const z = base.z + s.zoff + Math.sin(t * 9 + s.phase) * 0.5;
       pos[i * 3] = x;
       pos[i * 3 + 1] = y;
       pos[i * 3 + 2] = z;

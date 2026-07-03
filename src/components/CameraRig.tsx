@@ -38,21 +38,26 @@ export function CameraRig() {
     if (!product) return;
     const slot = slotForProduct(focus.zone, focus.product);
     const entry = MODEL_REGISTRY[product.model] ?? MODEL_REGISTRY["powerbank"];
-    const baseY = entry.pedestal ? 1.0 : 0.14;
+    const wall = slot.mount === "wall";
+    const baseY = wall ? slot.position.y : entry.pedestal ? 1.0 : 0.14;
     focusLook.copy(slot.position);
-    focusLook.y = baseY + entry.focusHeight * entry.displayScale;
+    focusLook.y = baseY + (wall ? 0 : entry.focusHeight * entry.displayScale);
 
     // stand between the product and the hall centre line, slightly off-axis
     dir.set(-slot.position.x, 0, 0).normalize();
     dir.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.45);
-    const distance = entry.pedestal ? SMALL_FOCUS_DISTANCE : BIG_FOCUS_DISTANCE;
+    const distance = wall
+      ? 3.0
+      : entry.pedestal
+      ? SMALL_FOCUS_DISTANCE
+      : BIG_FOCUS_DISTANCE;
     focusPos.copy(focusLook).addScaledVector(dir, distance);
-    focusPos.y = focusLook.y + (entry.pedestal ? 0.15 : 0.45);
+    focusPos.y = focusLook.y + (wall ? 0.15 : entry.pedestal ? 0.15 : 0.45);
 
     // pan right so the product sits left of the info panel
     const lookDir = focusLook.clone().sub(focusPos).normalize();
     const right = lookDir.clone().cross(new THREE.Vector3(0, 1, 0)).normalize();
-    focusLook.addScaledVector(right, entry.pedestal ? 0.3 : 0.7);
+    focusLook.addScaledVector(right, wall ? 0.6 : entry.pedestal ? 0.3 : 0.7);
   }, [focus, focusLook, focusPos, dir]);
 
   useFrame(({ camera, clock }, dt) => {

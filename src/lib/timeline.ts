@@ -77,13 +77,35 @@ export function activeZoneIndex(p: number): number {
 export interface Slot {
   position: THREE.Vector3;
   rotationY: number;
+  mount?: "wall" | "floor";
 }
+
+/* Pods layout (Climate zone) */
+export const WALL_AC_Y = 2.35;
+export const POD_WALL_X = 9.95;
+export const POD_SPACING = 5.2;
 
 export function productSlots(zoneIndex: number): Slot[] {
   const zone = content.zones[zoneIndex];
   const side = zoneSide(zoneIndex);
   const zc = zoneCenterZ(zoneIndex);
   const n = zone.products.length;
+
+  if (zone.layout === "pods") {
+    return zone.products.map((p, j) => {
+      const wall = p.mount === "wall";
+      return {
+        position: new THREE.Vector3(
+          side * (wall ? POD_WALL_X : PLATFORM_X),
+          wall ? WALL_AC_Y : 0,
+          zc + ((n - 1) / 2 - j) * POD_SPACING
+        ),
+        rotationY: side > 0 ? -Math.PI / 2 : Math.PI / 2,
+        mount: (wall ? "wall" : "floor") as "wall" | "floor",
+      };
+    });
+  }
+
   const spacing = n > 4 ? 2.9 : 3.3;
   return zone.products.map((_, j) => ({
     position: new THREE.Vector3(
@@ -93,6 +115,15 @@ export function productSlots(zoneIndex: number): Slot[] {
     ),
     rotationY: side > 0 ? -Math.PI / 2 : Math.PI / 2,
   }));
+}
+
+/** Total z-depth a zone's platform/pods occupy. */
+export function zoneDepth(zoneIndex: number): number {
+  const zone = content.zones[zoneIndex];
+  const n = zone.products.length;
+  if (zone.layout === "pods") return n * POD_SPACING + 1.2;
+  const spacing = n > 4 ? 2.9 : 3.3;
+  return n * spacing + 3.2;
 }
 
 export const slotForProduct = (zoneIndex: number, productIndex: number) =>

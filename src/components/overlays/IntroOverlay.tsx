@@ -1,56 +1,131 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { content } from "@/src/lib/content";
 import { useExperience } from "@/src/lib/store";
-import { Reveal, Line } from "./anim";
+
+const intro = content.event.intro;
+
+/* Staggered keynote reveal — mirrors the event brief's load sequence:
+   heading fades → sub-heading slides up → body line-by-line →
+   snapshot card slides in from the right → accent lines animate. */
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+const container: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.16, delayChildren: 0.25 } },
+  exit: { transition: { staggerChildren: 0.03 } },
+};
+
+const fadeIn: Variants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 1, ease: "easeOut" } },
+  exit: { opacity: 0, transition: { duration: 0.4 } },
+};
+
+const slideUp: Variants = {
+  hidden: { opacity: 0, y: 26 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } },
+  exit: { opacity: 0, y: -14, transition: { duration: 0.35 } },
+};
+
+const lineIn: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+  exit: { opacity: 0, transition: { duration: 0.3 } },
+};
+
+const cardIn: Variants = {
+  hidden: { opacity: 0, x: 70 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.9, ease: EASE } },
+  exit: { opacity: 0, x: 50, transition: { duration: 0.4 } },
+};
+
+const accentGrow: Variants = {
+  hidden: { scaleX: 0, opacity: 0 },
+  show: { scaleX: 1, opacity: 1, transition: { duration: 0.9, ease: EASE } },
+  exit: { opacity: 0, transition: { duration: 0.3 } },
+};
 
 export function IntroOverlay() {
   const progress = useExperience((s) => s.progress);
   const introDone = useExperience((s) => s.introDone);
   const setIntroDone = useExperience((s) => s.setIntroDone);
-  const anim = content.event.textAnimation ?? "fade";
 
-  const visible = !introDone && progress < 0.015;
+  // fade the whole panel out as the visitor begins scrolling toward the doors
+  const scrollFade = Math.max(0, 1 - progress / 0.05);
+  const visible = !introDone && progress < 0.05;
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
           key="intro"
-          className="intro-overlay"
+          className="keynote"
+          style={{ opacity: scrollFade }}
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 1.4, ease: "easeInOut" } }}
+          exit={{ opacity: 0, transition: { duration: 1.1, ease: "easeInOut" } }}
         >
-          <Reveal anim={anim} className="intro-inner">
-            <div className="intro-top">
-              <Line anim={anim}>
+          <motion.div
+            className="keynote-panel"
+            variants={container}
+            initial="hidden"
+            animate="show"
+            exit="exit"
+          >
+            {/* Left column (70%) — event objective */}
+            <div className="keynote-left">
+              <motion.div className="keynote-brand" variants={fadeIn}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img className="intro-logo" src="/brand/mi-logo.png" alt="Xiaomi" draggable={false} />
-              </Line>
-              <Line anim={anim} className="intro-kicker">
-                {content.event.subtitle}
-              </Line>
-              <Line anim={anim} className="intro-title">
-                {content.event.title}
-              </Line>
-              {content.event.welcome.map((line, i) => (
-                <Line anim={anim} key={i} className="intro-welcome">
-                  {line}
-                </Line>
-              ))}
-            </div>
-            <div className="intro-bottom">
-              <Line anim={anim}>
+                <img src="/brand/mi-logo.png" alt="Xiaomi" draggable={false} />
+                <span>{intro.kicker}</span>
+              </motion.div>
+
+              <motion.h1 className="keynote-heading" variants={fadeIn}>
+                {intro.heading}
+              </motion.h1>
+
+              <motion.div className="keynote-accents" variants={accentGrow}>
+                <span />
+                <span />
+              </motion.div>
+
+              <motion.h2 className="keynote-subheading" variants={slideUp}>
+                {intro.subheading}
+              </motion.h2>
+
+              <div className="keynote-body">
+                {intro.body.map((line, i) => (
+                  <motion.p key={i} variants={lineIn}>
+                    {line}
+                  </motion.p>
+                ))}
+              </div>
+
+              <motion.div className="keynote-cta" variants={lineIn}>
                 <button className="intro-button" onClick={setIntroDone}>
                   Enter the Experience
                 </button>
-              </Line>
-              <Line anim={anim} className="intro-hint">
-                {content.event.entryHint}
-              </Line>
+                <span className="keynote-hint">{content.event.entryHint}</span>
+              </motion.div>
             </div>
-          </Reveal>
+
+            {/* Right column (30%) — glassmorphism snapshot card */}
+            <motion.aside className="keynote-card" variants={cardIn}>
+              <div className="keynote-card-title">{intro.snapshot.title}</div>
+              <ul className="keynote-snapshot">
+                {intro.snapshot.items.map((item) => (
+                  <li key={item.label}>
+                    <span className="keynote-ico">{item.icon}</span>
+                    <span className="keynote-meta">
+                      <span className="keynote-label">{item.label}</span>
+                      <span className="keynote-value">{item.value}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </motion.aside>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

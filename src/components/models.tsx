@@ -61,8 +61,31 @@ function AcVertical({ accent }: ModelProps) {
   );
 }
 
-function AcSplit({ accent }: ModelProps) {
+/** Indoor split-AC unit, centred at the origin, louvre + LED facing +z. */
+function AcWallUnit({ accent }: ModelProps) {
   const led = useMemo(() => accentMat(accent), [accent]);
+  return (
+    <group>
+      <RoundedBox args={[1.05, 0.33, 0.26]} radius={0.1} material={white} />
+      <RoundedBox args={[0.98, 0.05, 0.02]} radius={0.01} position={[0, -0.12, 0.13]} material={dark} />
+      <mesh position={[0.42, 0, 0.135]} material={led}>
+        <circleGeometry args={[0.02, 20]} />
+      </mesh>
+    </group>
+  );
+}
+
+/** Wall-mount model (no stand) — used for the Climate pods. */
+function AcWall({ accent }: ModelProps) {
+  return (
+    <group position={[0, 0, 0]}>
+      <AcWallUnit accent={accent} />
+    </group>
+  );
+}
+
+/** Exhibition variant on a slim stand (used outside the pods layout). */
+function AcSplit({ accent }: ModelProps) {
   return (
     <group>
       {/* exhibition stand */}
@@ -73,11 +96,9 @@ function AcSplit({ accent }: ModelProps) {
         <cylinderGeometry args={[0.22, 0.26, 0.04, 24]} />
       </mesh>
       {/* wall unit */}
-      <RoundedBox args={[1.05, 0.33, 0.26]} radius={0.1} position={[0, 1.45, 0]} material={white} />
-      <RoundedBox args={[0.98, 0.05, 0.02]} radius={0.01} position={[0, 1.33, 0.13]} material={dark} />
-      <mesh position={[0.42, 1.45, 0.135]} material={led}>
-        <circleGeometry args={[0.02, 20]} />
-      </mesh>
+      <group position={[0, 1.45, 0]}>
+        <AcWallUnit accent={accent} />
+      </group>
     </group>
   );
 }
@@ -557,6 +578,7 @@ export interface ModelEntry {
 export const MODEL_REGISTRY: Record<string, ModelEntry> = {
   "ac-vertical": { Node: AcVertical, displayScale: 1, focusHeight: 1.1, pedestal: false },
   "ac-split": { Node: AcSplit, displayScale: 1, focusHeight: 1.35, pedestal: false },
+  "ac-wall": { Node: AcWall, displayScale: 1, focusHeight: 0, pedestal: false },
   washer: { Node: WasherGray, displayScale: 1, focusHeight: 0.55, pedestal: false },
   "washer-silver": { Node: WasherSilver, displayScale: 1, focusHeight: 0.55, pedestal: false },
   "washer-tower": { Node: WasherTower, displayScale: 1, focusHeight: 0.85, pedestal: false },
@@ -579,6 +601,8 @@ export const MODEL_REGISTRY: Record<string, ModelEntry> = {
   toothbrush: { Node: Toothbrush, displayScale: 2.8, focusHeight: 0.11, pedestal: true },
   glasses: { Node: AiGlasses, displayScale: 3.0, focusHeight: 0.1, pedestal: true },
 };
+
+export { AcWallUnit };
 
 export function ProductModel({ model, accent }: { model: string; accent: string }) {
   const entry = MODEL_REGISTRY[model] ?? MODEL_REGISTRY["powerbank"];

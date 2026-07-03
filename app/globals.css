@@ -97,79 +97,126 @@ body {
 }
 
 /* ------------------------------------------------------------------ */
-/* Intro overlay                                                        */
+/* Entrance keynote LED panel                                           */
 /* ------------------------------------------------------------------ */
 
-.intro-overlay {
+.keynote {
   position: fixed;
   inset: 0;
   z-index: 40;
   display: flex;
+  align-items: flex-start;
   justify-content: center;
-  text-align: center;
+  padding: 8vh 4vw 0;
+  pointer-events: none;
   background:
-    radial-gradient(ellipse at 50% 100%, rgba(255, 105, 0, 0.14) 0%, transparent 55%),
-    linear-gradient(180deg, rgba(7, 8, 12, 0.85) 0%, rgba(7, 8, 12, 0.2) 42%, rgba(7, 8, 12, 0.18) 62%, rgba(7, 8, 12, 0.85) 100%);
+    radial-gradient(ellipse at 30% 20%, rgba(255, 105, 0, 0.12) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(7, 8, 12, 0.9) 0%, rgba(7, 8, 12, 0.55) 46%, rgba(7, 8, 12, 0.12) 72%, transparent 100%);
 }
 
-.intro-inner {
-  width: min(860px, 100%);
-  height: 100%;
-  padding: 11vh 32px 6vh;
+.keynote-panel {
+  pointer-events: auto;
+  width: min(1240px, 100%);
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+}
+
+.keynote-left {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
 }
 
-.intro-top {
+.keynote-brand {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  margin-bottom: 22px;
 }
 
-.intro-bottom {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
+.keynote-brand img {
+  width: 40px;
+  height: 40px;
+  filter: drop-shadow(0 0 18px rgba(255, 105, 0, 0.5));
 }
 
-.intro-kicker {
-  letter-spacing: 0.34em;
+.keynote-brand span {
+  font-size: 12.5px;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  font-size: 13px;
   color: var(--mi-orange);
   font-weight: 600;
 }
 
-.intro-title {
-  font-size: clamp(38px, 5.6vw, 68px);
+.keynote-heading {
+  font-size: clamp(34px, 4.6vw, 40px);
   font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.14;
-  padding-bottom: 0.12em; /* keep descenders (g, y) inside the background-clip box */
-  background: linear-gradient(120deg, #ffffff 30%, #ffb46a 70%, #5ec8f2 105%);
+  line-height: 1.08;
+  padding-bottom: 0.1em;
+  background: linear-gradient(118deg, #ffffff 28%, #ffb46a 74%, #5ec8f2 108%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-.intro-welcome {
-  font-size: clamp(16px, 2vw, 21px);
-  color: var(--text-dim);
+.keynote-accents {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 18px 0 22px;
+  transform-origin: left center;
+}
+
+.keynote-accents span {
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--mi-orange), rgba(255, 105, 0, 0));
+}
+
+.keynote-accents span:first-child {
+  width: 220px;
+}
+.keynote-accents span:last-child {
+  width: 120px;
+  opacity: 0.6;
+}
+
+.keynote-subheading {
+  font-size: clamp(18px, 2.1vw, 26px);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 22px;
+}
+
+.keynote-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 640px;
+}
+
+.keynote-body p {
+  font-size: clamp(13.5px, 1.15vw, 15.5px);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.68);
   font-weight: 300;
-  max-width: 560px;
-  line-height: 1.5;
+}
+
+.keynote-cta {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 30px;
+  flex-wrap: wrap;
 }
 
 .intro-button {
-  margin-top: 16px;
-  padding: 15px 42px;
+  padding: 15px 40px;
   font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   color: #fff;
   background: var(--mi-orange);
   border: none;
@@ -185,12 +232,92 @@ body {
   box-shadow: 0 6px 60px rgba(255, 105, 0, 0.65);
 }
 
-.intro-hint {
-  margin-top: 8px;
-  font-size: 12.5px;
-  letter-spacing: 0.22em;
+.keynote-hint {
+  font-size: 11.5px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.keynote-card {
+  position: relative;
+  margin-top: 62px;
+  padding: 28px 26px;
+  border-radius: 22px;
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(22px);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.keynote-card-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--mi-orange);
+  margin-bottom: 20px;
+}
+
+.keynote-snapshot {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.keynote-snapshot li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.keynote-ico {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.keynote-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.keynote-label {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.keynote-value {
+  font-size: 14.5px;
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 500;
+}
+
+@media (max-width: 860px) {
+  .keynote {
+    padding: 7vh 5vw 0;
+    overflow-y: auto;
+  }
+  .keynote-panel {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .keynote-card {
+    margin-top: 0;
+  }
+  .keynote-body p:last-child {
+    display: none;
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -217,6 +344,41 @@ body {
   bottom: 12vh;
   text-align: center;
   width: min(560px, 90vw);
+}
+
+/* Grand Finale card — taller to hold the closing takeaway; anchored to the
+   top so the product ecosystem stays visible below it */
+.caption-finale {
+  top: 2cap;
+  bottom: auto;
+  width: min(680px, 92vw);
+  padding: 34px 40px 32px;
+}
+
+.caption-divider {
+  width: 90px;
+  height: 2px;
+  margin: 22px auto 18px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(255, 105, 0, 0), var(--mi-orange), rgba(255, 105, 0, 0));
+}
+
+.caption-closing-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mi-orange);
+  margin-bottom: 10px;
+}
+
+.caption-closing {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.62);
+  font-weight: 300;
+  max-width: 520px;
+  margin: 0 auto;
 }
 
 .caption-chapter {
@@ -871,13 +1033,6 @@ body {
   width: 34px;
   height: 34px;
   filter: drop-shadow(0 0 14px rgba(255, 105, 0, 0.45));
-}
-
-.intro-logo {
-  width: 62px;
-  height: 62px;
-  margin-bottom: 6px;
-  filter: drop-shadow(0 0 30px rgba(255, 105, 0, 0.5));
 }
 
 .hud-brand-text {

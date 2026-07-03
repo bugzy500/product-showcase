@@ -152,6 +152,84 @@ export function glowTexture(color: string) {
   return tex;
 }
 
+/** Dark demo screen: heading, sub-line and a simple accent sparkline. */
+export function infoScreenTexture(
+  title: string,
+  subtitle: string,
+  accent = "#5ec8f2",
+  opts: { stat?: string; harsh?: boolean } = {}
+) {
+  const width = 512;
+  const height = 384;
+  const canvas = makeCanvas(width, height);
+  const ctx = canvas.getContext("2d")!;
+
+  ctx.fillStyle = "#0c0f16";
+  ctx.fillRect(0, 0, width, height);
+  ctx.strokeStyle = "rgba(255,255,255,0.08)";
+  ctx.lineWidth = 4;
+  ctx.strokeRect(8, 8, width - 16, height - 16);
+
+  ctx.textAlign = "left";
+  ctx.fillStyle = accent;
+  ctx.font = "700 40px 'Segoe UI', Arial, sans-serif";
+  ctx.fillText(title, 34, 74, width - 60);
+
+  ctx.fillStyle = "rgba(255,255,255,0.6)";
+  ctx.font = "400 24px 'Segoe UI', Arial, sans-serif";
+  ctx.fillText(subtitle, 34, 116, width - 60);
+
+  if (opts.stat) {
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "700 72px 'Segoe UI', Arial, sans-serif";
+    ctx.fillText(opts.stat, 34, 210);
+  }
+
+  // sparkline
+  ctx.strokeStyle = accent;
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  const baseY = 320;
+  for (let i = 0; i <= 20; i++) {
+    const x = 34 + (i / 20) * (width - 80);
+    const wobble = opts.harsh
+      ? (i % 2 === 0 ? -1 : 1) * 42 // jagged = conventional
+      : Math.sin(i * 0.6) * 26; // smooth = natural
+    const y = baseY + wobble - (opts.stat ? 0 : 0);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 4;
+  return tex;
+}
+
+/** Frosted disc with a two-digit pod number and accent ring. */
+export function podNumberTexture(n: number, accent = "#ff6900") {
+  const size = 256;
+  const canvas = makeCanvas(size, size);
+  const ctx = canvas.getContext("2d")!;
+  ctx.clearRect(0, 0, size, size);
+  ctx.beginPath();
+  ctx.arc(size / 2, size / 2, size / 2 - 8, 0, Math.PI * 2);
+  ctx.fillStyle = "rgba(10,12,18,0.72)";
+  ctx.fill();
+  ctx.lineWidth = 8;
+  ctx.strokeStyle = accent;
+  ctx.stroke();
+  ctx.fillStyle = "#ffffff";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.font = "700 120px 'Segoe UI', Arial, sans-serif";
+  ctx.fillText(String(n).padStart(2, "0"), size / 2, size / 2 + 6);
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
 /** Abstract cinematic gradient for the Mini LED TV screen. */
 export function screenTexture() {
   const width = 512;

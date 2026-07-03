@@ -70,7 +70,7 @@ export function ProductDisplay({
   });
 
   const labelY =
-    baseY + entry.focusHeight * entry.displayScale + (entry.pedestal ? 0.55 : 0.85);
+    baseY + entry.focusHeight * entry.displayScale + (entry.pedestal ? 0.55 : 1.15);
 
   return (
     <group position={slot.position}>

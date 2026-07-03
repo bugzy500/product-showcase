@@ -38,6 +38,24 @@ Drop new files there and reference them from `images` to update the galleries.
 
 Text animation styles (`textAnimation` on any block): `fade` · `slide` · `scale` · `stagger` · `dissolve`.
 
+### Entrance keynote panel
+
+The arrival screen is driven by `event.intro`: `heading`, `subheading`, `body` (array of
+paragraphs), and `snapshot` (`title` + `items[]` of `icon` / `label` / `value`). Edit these to
+change the event objective and the Event Snapshot card — the layout and load animations stay put.
+
+### Climate zone pods
+
+The Climate zone uses `"layout": "pods"` to render four experience pods along a walkway instead of
+one platform. Each product carries `pod` (station name), `podTheme` (theme line), `podFeatures[]`,
+and `mount` (`"wall"` mounts the AC on the pod's feature wall, `"floor"` stands it on the floor).
+Product order is the visitor journey order. Remove `layout` to fall back to the standard platform.
+
+### Grand Finale closing message
+
+`finale.closingTitle` and `finale.closing` add the divider + "Why This Showcase Matters" takeaway
+that fades in after the main copy. Delete them to revert to the shorter card.
+
 ### Configuring the Amazon India transition
 
 A product flies into the Amazon page when it has **both** `"highlighted": true` **and** an

@@ -65,6 +65,37 @@ export function ledTextTexture(text: string, opts: LedTextOptions = {}) {
   return tex;
 }
 
+/** Floating milestone marker: big date label + title, glowing accent. */
+export function milestoneLabelTexture(
+  dateLabel: string,
+  title: string,
+  accent: string
+) {
+  const width = 640;
+  const height = 256;
+  const canvas = makeCanvas(width, height);
+  const ctx = canvas.getContext("2d")!;
+  ctx.clearRect(0, 0, width, height);
+
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.shadowColor = accent;
+  ctx.shadowBlur = 30;
+  ctx.fillStyle = accent;
+  ctx.font = "700 96px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif";
+  ctx.fillText(dateLabel, width / 2, 92, width * 0.94);
+
+  ctx.shadowBlur = 10;
+  ctx.fillStyle = "rgba(255,255,255,0.92)";
+  ctx.font = "500 40px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif";
+  ctx.fillText(title, width / 2, 186, width * 0.96);
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.anisotropy = 4;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
 /** Small floating name-chip texture shown above products. */
 export function labelTexture(text: string, accent = "#ff6900") {
   const width = 512;

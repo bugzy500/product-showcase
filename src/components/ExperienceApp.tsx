@@ -8,6 +8,7 @@ import { Scene } from "./Scene";
 import { IntroOverlay } from "./overlays/IntroOverlay";
 import { ZoneCaptions } from "./overlays/ZoneCaptions";
 import { ProductPanel } from "./overlays/ProductPanel";
+import { TimelineOverlay } from "./overlays/TimelineOverlay";
 import { AmazonOverlay } from "./overlays/AmazonOverlay";
 import { HUD, AmbientAudio } from "./overlays/HUD";
 
@@ -57,6 +58,7 @@ export default function ExperienceApp() {
       <IntroOverlay />
       <ZoneCaptions />
       <ProductPanel />
+      <TimelineOverlay />
       <AmazonOverlay />
       <HUD />
       <AmbientAudio />

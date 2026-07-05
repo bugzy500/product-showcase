@@ -35,6 +35,13 @@ const weights: Array<[string, number]> = [
   ["arrival", 1.5],
   ...content.zones.map((z): [string, number] => [z.id, 1]),
   ["finale", 1.7],
+  ["timeline", 1.2],
+  ["ms0", 1.0],
+  ["ms1", 1.0],
+  ["ms2", 1.6], // hero milestone (September) — strategic peak, gets more runway
+  ["ms3", 1.0],
+  ["ms4", 1.1],
+  ["closing", 1.2],
   ["amazon", 1.1],
 ];
 
@@ -192,6 +199,78 @@ export const finaleSlots: FinaleSlot[] = (() => {
 })();
 
 /* ------------------------------------------------------------------ */
+/* AIoT H2 2026 timeline                                               */
+/* ------------------------------------------------------------------ */
+
+export const MILESTONE_COUNT = 5;
+
+/** The illuminated timeline sits in a deep bay beyond the finale rotunda. */
+export const TL_OVERVIEW_Z = FINALE_Z - 46;
+export const TL_LINE_Y = 2.4;
+export const TL_HALF_WIDTH = 17;
+/** How far −Z each milestone environment sits behind its node. */
+export const TL_BAY_DEPTH = 26;
+
+/** X position of milestone node i along the horizontal glowing line. */
+export function milestoneNodeX(i: number): number {
+  return -TL_HALF_WIDTH + (i / (MILESTONE_COUNT - 1)) * TL_HALF_WIDTH * 2;
+}
+
+/** Z centre of milestone environment i (its bay is set back behind the line;
+ *  the hero bay sits slightly deeper so it reads as grander). */
+export function milestoneCenterZ(i: number): number {
+  return TL_OVERVIEW_Z - TL_BAY_DEPTH - (i === 2 ? 4 : 0);
+}
+
+/** World centre of milestone environment i. Bays fan slightly toward centre. */
+export function milestoneCenter(i: number): THREE.Vector3 {
+  return new THREE.Vector3(milestoneNodeX(i) * 0.55, 0, milestoneCenterZ(i));
+}
+
+export const msSegId = (i: number) => `ms${i}`;
+export const milestoneSegment = (i: number): Segment => segment(msSegId(i));
+
+/**
+ * How "active" milestone i is at progress p — 0 outside its segment,
+ * ramps to 1 across the dwell window. Used to fade its environment/panel in.
+ */
+export function milestoneActivity(p: number, i: number): number {
+  const s = milestoneSegment(i);
+  const t = (p - s.start) / (s.end - s.start);
+  if (t < -0.25 || t > 1.25) return 0;
+  return clamp01(1 - (Math.abs(t - 0.5) - 0.5) / 0.28);
+}
+
+/** Whether milestone i's environment should be mounted at all (culling).
+ *  A tight window keeps adjacent bays (which share a Z-row) from bleeding
+ *  into each other at the dwell point. */
+export function milestoneVisible(p: number, i: number): boolean {
+  const s = milestoneSegment(i);
+  return p > s.start - 0.02 && p < s.end + 0.02;
+}
+
+/** Node visual state per the brief: completed | active | future. */
+export function milestoneState(
+  p: number,
+  i: number
+): "completed" | "active" | "future" {
+  const s = milestoneSegment(i);
+  if (p >= s.end) return "completed";
+  if (p >= s.start) return "active";
+  return "future";
+}
+
+/** Ramp for the spine morph-in: 0 before the timeline, 1 once revealed. */
+export function timelineActivity(p: number): number {
+  const tl = segment("timeline");
+  const closing = segment("closing");
+  if (p < tl.start - 0.02) return 0;
+  if (p > closing.end) return 0;
+  // fade in across the first half of the timeline segment
+  return clamp01((p - tl.start + 0.02) / ((tl.end - tl.start) * 0.5));
+}
+
+/* ------------------------------------------------------------------ */
 /* Camera path                                                         */
 /* ------------------------------------------------------------------ */
 
@@ -281,6 +360,112 @@ function catmull(p0: number, p1: number, p2: number, p3: number, t: number) {
 
 const _oEnd = { pos: new THREE.Vector3(), look: new THREE.Vector3() };
 
+/* ------------------------------------------------------------------ */
+/* Timeline-act camera (zoom-out → milestone travel → closing return)  */
+/* ------------------------------------------------------------------ */
+
+interface TlKey {
+  p: number; // real progress 0..1
+  pos: [number, number, number];
+  look: [number, number, number];
+}
+
+/** Keyframes across the timeline act, keyed off real progress. */
+const tlKeys: TlKey[] = (() => {
+  const tl = segment("timeline");
+  const closing = segment("closing");
+  const overviewLook: [number, number, number] = [0, TL_LINE_Y, TL_OVERVIEW_Z];
+  const keys: TlKey[] = [];
+
+  // wide reveal of the whole illuminated line, then ease in toward it
+  keys.push({ p: tl.start, pos: [0, TL_LINE_Y + 7.5, TL_OVERVIEW_Z + 40], look: overviewLook });
+  keys.push({
+    p: tl.start + (tl.end - tl.start) * 0.55,
+    pos: [0, TL_LINE_Y + 4.5, TL_OVERVIEW_Z + 22],
+    look: overviewLook,
+  });
+
+  for (let i = 0; i < MILESTONE_COUNT; i++) {
+    const s = milestoneSegment(i);
+    const w = s.end - s.start;
+    const c = milestoneCenter(i);
+    const nodeX = milestoneNodeX(i);
+    const hero = i === 2;
+    // approach — hang on the line above the node
+    keys.push({
+      p: s.start + w * 0.12,
+      pos: [nodeX * 0.7, TL_LINE_Y + 1.8, TL_OVERVIEW_Z + 5],
+      look: [nodeX * 0.6, TL_LINE_Y - 0.6, c.z + 8],
+    });
+    // dwell — inside the environment (wider framing for the hero)
+    keys.push({
+      p: s.start + w * 0.58,
+      pos: [c.x, hero ? 2.9 : 2.3, c.z + (hero ? 14 : 11)],
+      look: [c.x, hero ? 2.4 : 2.0, c.z - (hero ? 2 : 0)],
+    });
+    // rise back toward the line before the next milestone
+    keys.push({
+      p: s.end - w * 0.08,
+      pos: [nodeX * 0.6, TL_LINE_Y + 1.5, TL_OVERVIEW_Z + 6],
+      look: [nodeX * 0.5, TL_LINE_Y, TL_OVERVIEW_Z],
+    });
+  }
+
+  // final key = the closing wide shot (matches sampleTimelineCamera's wideP)
+  keys.push({ p: closing.start, pos: [0, TL_LINE_Y + 11, TL_OVERVIEW_Z + 48], look: overviewLook });
+  return keys;
+})();
+
+const _tlEnd = { pos: new THREE.Vector3(), look: new THREE.Vector3() };
+const _tlWideP = new THREE.Vector3(0, TL_LINE_Y + 11, TL_OVERVIEW_Z + 48);
+const _tlWideL = new THREE.Vector3(0, TL_LINE_Y, TL_OVERVIEW_Z);
+
+/** Catmull-Rom sample of tlKeys at real progress p. */
+function sampleTlKeys(p: number, pos: THREE.Vector3, look: THREE.Vector3) {
+  const keys = tlKeys;
+  let i = 0;
+  while (i < keys.length - 1 && keys[i + 1].p < p) i++;
+  const k1 = keys[i];
+  const k2 = keys[Math.min(i + 1, keys.length - 1)];
+  const k0 = keys[Math.max(i - 1, 0)];
+  const k3 = keys[Math.min(i + 2, keys.length - 1)];
+  const t = clamp01((p - k1.p) / Math.max(k2.p - k1.p, 1e-5));
+  pos.set(
+    catmull(k0.pos[0], k1.pos[0], k2.pos[0], k3.pos[0], t),
+    catmull(k0.pos[1], k1.pos[1], k2.pos[1], k3.pos[1], t),
+    catmull(k0.pos[2], k1.pos[2], k2.pos[2], k3.pos[2], t)
+  );
+  const st = smooth(t);
+  look.set(
+    k1.look[0] + (k2.look[0] - k1.look[0]) * st,
+    k1.look[1] + (k2.look[1] - k1.look[1]) * st,
+    k1.look[2] + (k2.look[2] - k1.look[2]) * st
+  );
+}
+
+/**
+ * Camera during the timeline act (timeline + ms0..ms4 + closing).
+ * The closing phase rises to a wide "all nodes lit" shot, then glides back
+ * to the finale rotunda (orbitPose(1)) so the existing Amazon branch — which
+ * starts from that same pose — stays continuous.
+ */
+function sampleTimelineCamera(
+  p: number,
+  pos: THREE.Vector3,
+  look: THREE.Vector3
+) {
+  const closing = segment("closing");
+  const cl = localT(p, closing);
+  if (cl > 0) {
+    orbitPose(1, _tlEnd.pos, _tlEnd.look);
+    const back = smooth(clamp01((cl - 0.5) / 0.5));
+    pos.copy(_tlWideP).lerp(_tlEnd.pos, back);
+    look.copy(_tlWideL).lerp(_tlEnd.look, back);
+    return;
+  }
+  sampleTlKeys(p, pos, look);
+}
+
 /**
  * Sample the walkthrough camera at progress p. Writes into pos/look.
  * Covers the keyframed walk, the procedural finale orbit and the
@@ -293,12 +478,18 @@ export function sampleCamera(
 ) {
   const f = segment("finale");
   const am = segment("amazon");
+  const tl = segment("timeline");
 
   if (p >= am.start) {
     const t = smooth(localT(p, am));
     orbitPose(1, _oEnd.pos, _oEnd.look);
     pos.copy(_oEnd.pos).lerp(new THREE.Vector3(0, 3.0, FINALE_Z + 16), t);
     look.copy(_oEnd.look).lerp(new THREE.Vector3(0, 2.6, FINALE_Z), t);
+    return;
+  }
+
+  if (p >= tl.start) {
+    sampleTimelineCamera(p, pos, look);
     return;
   }
 

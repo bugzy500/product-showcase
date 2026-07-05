@@ -977,5 +977,123 @@
     ],
     "note": "Product listing is configurable — set \"highlighted\": true and an \"amazon\" block on any product in this file.",
     "textAnimation": "slide"
+  },
+  "timeline": {
+    "enabled": true,
+    "chapter": "H2 2026 Roadmap",
+    "intro": {
+      "kicker": "The Journey Continues",
+      "heading": "One Connected AIoT Strategy",
+      "subheading": "Every launch, experience and innovation across H2 2026 — on a single illuminated timeline."
+    },
+    "milestones": [
+      {
+        "id": "purifier-launch",
+        "month": "August 2026",
+        "dateLabel": "AUG",
+        "title": "Air Purifier Launch",
+        "focus": "Pre-heat phase (7–10 days)",
+        "environment": "Digital Marketing Control Room",
+        "accent": "#5ec8f2",
+        "icon": "purifier",
+        "headline": "The launch begins before the launch.",
+        "body": "A pre-heat control room orchestrates the countdown to the Air Purifier launch — every teaser, every creator drop, every dashboard in one command centre.",
+        "bullets": [
+          "Social media calendar",
+          "Teaser campaign",
+          "Product reveal",
+          "Launch countdown",
+          "Creator content",
+          "Performance dashboards"
+        ],
+        "products": ["purifier-6", "purifier-4compact"]
+      },
+      {
+        "id": "aiot-offline",
+        "month": "September 2026",
+        "dateLabel": "SEP",
+        "title": "AIoT Offline Experience — Q Note Launch",
+        "focus": "Interactive experience inside the offline smartphone launch venue",
+        "environment": "Premium Experience Zone",
+        "accent": "#ffb46a",
+        "icon": "powerbank",
+        "headline": "AIoT, hands-on.",
+        "body": "Inside the Q Note launch venue, a premium experience zone lets media and guests touch the ecosystem — charging bars, air-purification demos and smart-living displays.",
+        "bullets": [
+          "Charging experiences",
+          "Air purification demos",
+          "Product interaction tables",
+          "Hands-on media engagement",
+          "Smart living displays"
+        ],
+        "products": ["pb-67w", "pb-165w", "pb-ultrathin", "pb-qi22", "purifier-6", "purifier-4compact"]
+      },
+      {
+        "id": "hero-ifa",
+        "month": "4–6 September 2026",
+        "dateLabel": "SEP 4–6",
+        "title": "Hero Milestone — IFA Berlin & Smarter Living",
+        "focus": "Strategic peak of the roadmap",
+        "environment": "IFA Berlin 2026 · Global Showcase",
+        "accent": "#ff6900",
+        "icon": "globe",
+        "headline": "The world stage.",
+        "body": "An airport departure carries the story to IFA Berlin 2026 — the world's largest consumer-electronics exhibition — and connects directly to the Xiaomi Smarter Living Media Event as the centrepiece of the roadmap.",
+        "bullets": [
+          "Airport departure sequence",
+          "IFA Berlin halls & innovations",
+          "Global showcase presence",
+          "Xiaomi Smarter Living Media Event"
+        ],
+        "products": [],
+        "experienceB": { "label": "Enter the Smarter Living Media Event", "action": "replay" }
+      },
+      {
+        "id": "ac-factory",
+        "month": "November 2026",
+        "dateLabel": "NOV",
+        "title": "AC Pre-Heat & Factory Visit",
+        "focus": "Engineering excellence and storytelling",
+        "environment": "Guided Factory Tour",
+        "accent": "#7ecb8f",
+        "icon": "factory",
+        "headline": "Where excellence is engineered.",
+        "body": "A guided factory tour reveals the craft behind the Air Conditioner — compressor technology, smart sensors and quality testing along a living assembly line.",
+        "bullets": [
+          "Component manufacturing",
+          "Compressor technology",
+          "Energy efficiency",
+          "Smart sensors",
+          "Quality testing",
+          "Assembly line processes"
+        ],
+        "products": ["ac-fresh-air-pro", "ac-natural-wind"]
+      },
+      {
+        "id": "ac-launch",
+        "month": "December 2026",
+        "dateLabel": "DEC",
+        "title": "Air Conditioner Launch",
+        "focus": "Culmination of the H2 AIoT strategy",
+        "environment": "Factory Doors → Premium Launch Stage",
+        "accent": "#ff6900",
+        "icon": "ac",
+        "headline": "The doors open.",
+        "body": "The factory doors part onto a premium launch stage — the hero Air Conditioner revealed under the lights, closing the H2 AIoT strategy.",
+        "bullets": [
+          "Product reveal",
+          "Launch event",
+          "Media photography",
+          "Digital campaign",
+          "Online availability",
+          "Hero product showcase"
+        ],
+        "products": ["ac-fresh-air-pro"]
+      }
+    ],
+    "closing": {
+      "title": "One Shared Vision",
+      "message": "Every initiative, every launch, every experience, and every innovation contributes to one shared vision—establishing Xiaomi as India's most innovative and trusted AIoT ecosystem."
+    }
   }
 }

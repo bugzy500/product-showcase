@@ -60,6 +60,33 @@ export interface SnapshotItem {
   value: string;
 }
 
+export interface Milestone {
+  id: string;
+  month: string;
+  dateLabel: string;
+  title: string;
+  focus: string;
+  environment: string;
+  accent: string;
+  /** icon key drawn as an inline SVG in the overlay */
+  icon: string;
+  headline: string;
+  body: string;
+  bullets: string[];
+  /** ids into allProducts shown in this milestone's bay */
+  products: string[];
+  /** Hero milestone only: the "enter the existing experience" action. */
+  experienceB?: { label: string; action: "replay" };
+}
+
+export interface TimelineContent {
+  enabled: boolean;
+  chapter: string;
+  intro: { kicker: string; heading: string; subheading: string };
+  milestones: Milestone[];
+  closing: { title: string; message: string };
+}
+
 export interface ExperienceContent {
   event: {
     title: string;
@@ -97,6 +124,7 @@ export interface ExperienceContent {
     note: string;
     textAnimation?: TextAnimation;
   };
+  timeline?: TimelineContent;
 }
 
 export const content = raw as unknown as ExperienceContent;
@@ -122,3 +150,5 @@ export const allProducts: FlatProduct[] = content.zones.flatMap((zone, zi) =>
 export const amazonProducts: FlatProduct[] = allProducts.filter(
   (p) => p.highlighted && p.amazon
 );
+
+export const timeline: TimelineContent | undefined = content.timeline;

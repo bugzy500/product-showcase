@@ -2,9 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { content } from "@/src/lib/content";
+import { content, timeline } from "@/src/lib/content";
 import { useExperience } from "@/src/lib/store";
-import { segment, segments, zoneSegment, localT } from "@/src/lib/timeline";
+import { segment, segments, zoneSegment, localT, milestoneSegment } from "@/src/lib/timeline";
 
 function scrollToProgress(p: number) {
   const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -23,6 +23,19 @@ export function HUD() {
     { id: "arrival", label: "Arrival", p: 0 },
     ...content.zones.map((z, i) => ({ id: z.id, label: z.name, p: zoneSegment(i).start })),
     { id: "finale", label: content.finale.chapter, p: segment("finale").start },
+    ...(timeline?.enabled
+      ? [
+          { id: "timeline", label: timeline.chapter, p: segment("timeline").start },
+          ...timeline.milestones.map((m, i) => ({
+            id: m.id,
+            label: m.dateLabel,
+            p:
+              milestoneSegment(i).start +
+              (milestoneSegment(i).end - milestoneSegment(i).start) * 0.55,
+          })),
+          { id: "closing", label: timeline.closing.title, p: segment("closing").start },
+        ]
+      : []),
     { id: "amazon", label: content.amazon.chapter, p: segment("amazon").start },
   ];
   const activeIdx = stops.reduce((acc, s, i) => (progress >= s.p - 0.004 ? i : acc), 0);

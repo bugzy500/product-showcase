@@ -35,6 +35,13 @@ const weights: Array<[string, number]> = [
   ["arrival", 1.5],
   ...content.zones.map((z): [string, number] => [z.id, 1]),
   ["finale", 1.7],
+  ["timeline", 1.2],
+  ["ms0", 1.0],
+  ["ms1", 1.0],
+  ["ms2", 1.6], // hero milestone (September) — strategic peak, gets more runway
+  ["ms3", 1.0],
+  ["ms4", 1.1],
+  ["closing", 1.2],
   ["amazon", 1.1],
 ];
 
@@ -342,4 +349,74 @@ export function zoneActivity(p: number, i: number): number {
 export function zoneVisible(p: number, i: number): boolean {
   const s = zoneSegment(i);
   return p > s.start - 0.12 && p < s.end + 0.12;
+}
+
+/* ------------------------------------------------------------------ */
+/* AIoT H2 2026 timeline                                               */
+/* ------------------------------------------------------------------ */
+
+export const MILESTONE_COUNT = 5;
+
+/** The illuminated timeline sits in a deep bay beyond the finale rotunda. */
+export const TL_OVERVIEW_Z = FINALE_Z - 46;
+export const TL_LINE_Y = 2.4;
+export const TL_HALF_WIDTH = 17;
+/** How far −Z each milestone environment sits behind its node. */
+export const TL_BAY_DEPTH = 26;
+
+/** X position of milestone node i along the horizontal glowing line. */
+export function milestoneNodeX(i: number): number {
+  return -TL_HALF_WIDTH + (i / (MILESTONE_COUNT - 1)) * TL_HALF_WIDTH * 2;
+}
+
+/** Z centre of milestone environment i (its bay is set back behind the line;
+ *  the hero bay sits slightly deeper so it reads as grander). */
+export function milestoneCenterZ(i: number): number {
+  return TL_OVERVIEW_Z - TL_BAY_DEPTH - (i === 2 ? 4 : 0);
+}
+
+/** World centre of milestone environment i. Bays fan slightly toward centre. */
+export function milestoneCenter(i: number): THREE.Vector3 {
+  return new THREE.Vector3(milestoneNodeX(i) * 0.55, 0, milestoneCenterZ(i));
+}
+
+export const msSegId = (i: number) => `ms${i}`;
+export const milestoneSegment = (i: number): Segment => segment(msSegId(i));
+
+/**
+ * How "active" milestone i is at progress p — 0 outside its segment,
+ * ramps to 1 across the dwell window. Used to fade its environment/panel in.
+ */
+export function milestoneActivity(p: number, i: number): number {
+  const s = milestoneSegment(i);
+  const t = (p - s.start) / (s.end - s.start);
+  if (t < -0.25 || t > 1.25) return 0;
+  return clamp01(1 - (Math.abs(t - 0.5) - 0.5) / 0.28);
+}
+
+/** Whether milestone i's environment should be mounted at all (culling). */
+export function milestoneVisible(p: number, i: number): boolean {
+  const s = milestoneSegment(i);
+  return p > s.start - 0.06 && p < s.end + 0.06;
+}
+
+/** Node visual state per the brief: completed | active | future. */
+export function milestoneState(
+  p: number,
+  i: number
+): "completed" | "active" | "future" {
+  const s = milestoneSegment(i);
+  if (p >= s.end) return "completed";
+  if (p >= s.start) return "active";
+  return "future";
+}
+
+/** Ramp for the spine morph-in: 0 before the timeline, 1 once revealed. */
+export function timelineActivity(p: number): number {
+  const tl = segment("timeline");
+  const closing = segment("closing");
+  if (p < tl.start - 0.02) return 0;
+  if (p > closing.end) return 0;
+  // fade in across the first half of the timeline segment
+  return clamp01((p - tl.start + 0.02) / ((tl.end - tl.start) * 0.5));
 }

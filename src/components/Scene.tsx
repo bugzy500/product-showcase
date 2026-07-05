@@ -6,6 +6,7 @@ import { content } from "@/src/lib/content";
 import { Hall } from "./Hall";
 import { ZoneEnvironment } from "./ZoneEnvironment";
 import { FinaleScene } from "./FinaleScene";
+import { TimelineScene } from "./TimelineScene";
 import { CameraRig } from "./CameraRig";
 
 export function Scene() {
@@ -35,6 +36,7 @@ export function Scene() {
         <ZoneEnvironment key={zone.id} zone={zone} index={i} />
       ))}
       <FinaleScene />
+      <TimelineScene />
       <CameraRig />
 
       {/* cinematic grade: soft bloom on LED/emissive surfaces */}

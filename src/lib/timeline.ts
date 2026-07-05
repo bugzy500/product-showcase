@@ -241,10 +241,12 @@ export function milestoneActivity(p: number, i: number): number {
   return clamp01(1 - (Math.abs(t - 0.5) - 0.5) / 0.28);
 }
 
-/** Whether milestone i's environment should be mounted at all (culling). */
+/** Whether milestone i's environment should be mounted at all (culling).
+ *  A tight window keeps adjacent bays (which share a Z-row) from bleeding
+ *  into each other at the dwell point. */
 export function milestoneVisible(p: number, i: number): boolean {
   const s = milestoneSegment(i);
-  return p > s.start - 0.06 && p < s.end + 0.06;
+  return p > s.start - 0.02 && p < s.end + 0.02;
 }
 
 /** Node visual state per the brief: completed | active | future. */

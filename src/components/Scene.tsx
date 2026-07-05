@@ -2,11 +2,12 @@
 
 import { Environment, Lightformer } from "@react-three/drei";
 import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
-import { content } from "@/src/lib/content";
+import { content, timeline } from "@/src/lib/content";
 import { Hall } from "./Hall";
 import { ZoneEnvironment } from "./ZoneEnvironment";
 import { FinaleScene } from "./FinaleScene";
 import { TimelineScene } from "./TimelineScene";
+import { MilestoneEnvironment } from "./MilestoneEnvironment";
 import { CameraRig } from "./CameraRig";
 
 export function Scene() {
@@ -37,6 +38,8 @@ export function Scene() {
       ))}
       <FinaleScene />
       <TimelineScene />
+      {timeline?.enabled &&
+        timeline.milestones.map((_, i) => <MilestoneEnvironment key={i} index={i} />)}
       <CameraRig />
 
       {/* cinematic grade: soft bloom on LED/emissive surfaces */}

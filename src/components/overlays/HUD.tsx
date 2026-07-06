@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { content, timeline } from "@/src/lib/content";
 import { useExperience } from "@/src/lib/store";
-import { segment, segments, zoneSegment, localT, milestoneSegment } from "@/src/lib/timeline";
+import { segment, zoneSegment, localT, milestoneSegment } from "@/src/lib/timeline";
 
 function scrollToProgress(p: number) {
   const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -19,31 +19,42 @@ export function HUD() {
   const toggleAudio = useExperience((s) => s.toggleAudio);
   const focus = useExperience((s) => s.focus);
 
-  const stops = [
-    { id: "arrival", label: "Arrival", p: 0 },
-    ...content.zones.map((z, i) => ({ id: z.id, label: z.name, p: zoneSegment(i).start })),
-    { id: "finale", label: content.finale.chapter, p: segment("finale").start },
-    ...(timeline?.enabled
-      ? [
-          { id: "timeline", label: timeline.chapter, p: segment("timeline").start },
-          ...timeline.milestones.map((m, i) => ({
-            id: m.id,
-            label: m.dateLabel,
-            p:
-              milestoneSegment(i).start +
-              (milestoneSegment(i).end - milestoneSegment(i).start) * 0.55,
-          })),
-          { id: "closing", label: timeline.closing.title, p: segment("closing").start },
-        ]
-      : []),
-    { id: "amazon", label: content.amazon.chapter, p: segment("amazon").start },
-  ];
+  const ms = (i: number) =>
+    milestoneSegment(i).start + (milestoneSegment(i).end - milestoneSegment(i).start) * 0.55;
+
+  const stops = timeline?.enabled
+    ? [
+        { id: "timeline", label: timeline.chapter, p: segment("timeline").start },
+        { id: "ms0", label: "Aug", p: ms(0) },
+        { id: "ms1", label: "Sep", p: ms(1) },
+        { id: "ms2", label: timeline.milestones[2].dateLabel, p: ms(2) },
+        { id: "ms3", label: "Oct", p: ms(3) },
+        // Smarter Living walkthrough nested under October
+        { id: "arrival", label: content.event.title, p: segment("arrival").start },
+        { id: "finale", label: content.finale.chapter, p: segment("finale").start },
+        { id: "amazon", label: content.amazon.chapter, p: segment("amazon").start },
+        { id: "ms4", label: "Nov", p: ms(4) },
+        { id: "ms5", label: "Nov", p: ms(5) },
+        { id: "ms6", label: "Dec", p: ms(6) },
+        { id: "closing", label: timeline.closing.title, p: segment("closing").start },
+      ]
+    : [
+        { id: "arrival", label: "Arrival", p: 0 },
+        ...content.zones.map((z, i) => ({ id: z.id, label: z.name, p: zoneSegment(i).start })),
+        { id: "finale", label: content.finale.chapter, p: segment("finale").start },
+        { id: "amazon", label: content.amazon.chapter, p: segment("amazon").start },
+      ];
   const activeIdx = stops.reduce((acc, s, i) => (progress >= s.p - 0.004 ? i : acc), 0);
 
-  // cinematic letterbox during arrival + finale/amazon
+  // cinematic letterbox: roadmap landing, walkthrough arrival, and finale/amazon band
+  const landingT = localT(progress, segment("timeline"));
   const arrivalT = localT(progress, segment("arrival"));
-  const finaleOn = progress > segment("finale").start;
-  const bars = (!introDone || arrivalT < 0.9 || finaleOn) && !focus ? "6vh" : "0vh";
+  const inFinaleAmazon = progress >= segment("finale").start && progress < segment("slreturn").start;
+  const bars =
+    (!introDone || landingT < 0.9 || (progress >= segment("arrival").start && arrivalT < 0.9) || inFinaleAmazon) &&
+    !focus
+      ? "6vh"
+      : "0vh";
 
   return (
     <>

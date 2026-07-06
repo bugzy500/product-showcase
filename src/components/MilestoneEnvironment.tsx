@@ -177,6 +177,38 @@ function LaunchStage({ accent, index }: { accent: string; index: number }) {
   );
 }
 
+/** Glowing venue portal for the Smarter Living (October) milestone. */
+function SmarterLivingPortal({ accent }: { accent: string }) {
+  const marquee = useMemo(
+    () => infoScreenTexture("XIAOMI SMARTER LIVING", "Media Event · Enter →", accent),
+    [accent]
+  );
+  return (
+    <group>
+      {/* portal frame */}
+      <mesh position={[-3.2, 3, -2]} material={metalMat}>
+        <boxGeometry args={[0.4, 6, 0.4]} />
+      </mesh>
+      <mesh position={[3.2, 3, -2]} material={metalMat}>
+        <boxGeometry args={[0.4, 6, 0.4]} />
+      </mesh>
+      <mesh position={[0, 6, -2]} material={metalMat}>
+        <boxGeometry args={[6.8, 0.4, 0.4]} />
+      </mesh>
+      {/* glowing doorway */}
+      <mesh position={[0, 3, -2.2]}>
+        <planeGeometry args={[6, 5.6]} />
+        <meshBasicMaterial color={accent} transparent opacity={0.22} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </mesh>
+      {/* marquee */}
+      <mesh position={[0, 4.4, -1.8]}>
+        <planeGeometry args={[6, 1.4]} />
+        <meshBasicMaterial map={marquee} toneMapped={false} />
+      </mesh>
+    </group>
+  );
+}
+
 function EnvironmentSet({ env, accent, index }: { env: string; accent: string; index: number }) {
   switch (env) {
     case "control-room":
@@ -189,6 +221,8 @@ function EnvironmentSet({ env, accent, index }: { env: string; accent: string; i
       return <AssemblyLine accent={accent} />;
     case "launch-stage":
       return <LaunchStage accent={accent} index={index} />;
+    case "sl-portal":
+      return <SmarterLivingPortal accent={accent} />;
     default:
       return null;
   }

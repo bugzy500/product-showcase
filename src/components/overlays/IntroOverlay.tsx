@@ -1,10 +1,10 @@
 "use client";
 
 import { AnimatePresence, motion, type Variants } from "framer-motion";
-import { content } from "@/src/lib/content";
+import { content, timeline } from "@/src/lib/content";
 import { useExperience } from "@/src/lib/store";
 
-const intro = content.event.intro;
+const intro = timeline!.intro;
 
 /* Staggered keynote reveal — mirrors the event brief's load sequence:
    heading fades → sub-heading slides up → body line-by-line →
@@ -33,12 +33,6 @@ const lineIn: Variants = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
   exit: { opacity: 0, transition: { duration: 0.3 } },
-};
-
-const cardIn: Variants = {
-  hidden: { opacity: 0, x: 70 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.9, ease: EASE } },
-  exit: { opacity: 0, x: 50, transition: { duration: 0.4 } },
 };
 
 const accentGrow: Variants = {
@@ -94,37 +88,13 @@ export function IntroOverlay() {
                 {intro.subheading}
               </motion.h2>
 
-              <div className="keynote-body">
-                {intro.body.map((line, i) => (
-                  <motion.p key={i} variants={lineIn}>
-                    {line}
-                  </motion.p>
-                ))}
-              </div>
-
               <motion.div className="keynote-cta" variants={lineIn}>
                 <button className="intro-button" onClick={setIntroDone}>
-                  Enter the Experience
+                  Begin the Journey
                 </button>
                 <span className="keynote-hint">{content.event.entryHint}</span>
               </motion.div>
             </div>
-
-            {/* Right column (30%) — glassmorphism snapshot card */}
-            <motion.aside className="keynote-card" variants={cardIn}>
-              <div className="keynote-card-title">{intro.snapshot.title}</div>
-              <ul className="keynote-snapshot">
-                {intro.snapshot.items.map((item) => (
-                  <li key={item.label}>
-                    <span className="keynote-ico">{item.icon}</span>
-                    <span className="keynote-meta">
-                      <span className="keynote-label">{item.label}</span>
-                      <span className="keynote-value">{item.value}</span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </motion.aside>
           </motion.div>
         </motion.div>
       )}

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { content, allProducts } from "./content";
+import { content, allProducts, timeline } from "./content";
 
 /* ------------------------------------------------------------------ */
 /* World layout constants                                              */
@@ -216,10 +216,15 @@ export function milestoneNodeX(i: number): number {
   return -TL_HALF_WIDTH + (i / (MILESTONE_COUNT - 1)) * TL_HALF_WIDTH * 2;
 }
 
+/** Whether milestone i is the flagship (data-driven; replaces the old hardcoded index). */
+export function isHero(i: number): boolean {
+  return !!timeline?.milestones[i]?.hero;
+}
+
 /** Z centre of milestone environment i (its bay is set back behind the line;
  *  the hero bay sits slightly deeper so it reads as grander). */
 export function milestoneCenterZ(i: number): number {
-  return TL_OVERVIEW_Z - TL_BAY_DEPTH - (i === 2 ? 4 : 0);
+  return TL_OVERVIEW_Z - TL_BAY_DEPTH - (isHero(i) ? 4 : 0);
 }
 
 /** World centre of milestone environment i. Bays fan slightly toward centre. */

@@ -996,6 +996,7 @@
         "environment": "Digital Marketing Control Room",
         "accent": "#5ec8f2",
         "icon": "purifier",
+        "env": "control-room",
         "headline": "The launch begins before the launch.",
         "body": "A pre-heat control room orchestrates the countdown to the Air Purifier launch — every teaser, every creator drop, every dashboard in one command centre.",
         "bullets": [
@@ -1017,6 +1018,7 @@
         "environment": "Premium Experience Zone",
         "accent": "#ffb46a",
         "icon": "powerbank",
+        "env": "experience-zone",
         "headline": "AIoT, hands-on.",
         "body": "Inside the Q Note launch venue, a premium experience zone lets media and guests touch the ecosystem — charging bars, air-purification demos and smart-living displays.",
         "bullets": [
@@ -1037,6 +1039,8 @@
         "environment": "IFA Berlin 2026 · Global Showcase",
         "accent": "#ff6900",
         "icon": "globe",
+        "env": "ifa",
+        "hero": true,
         "headline": "The world stage.",
         "body": "An airport departure carries the story to IFA Berlin 2026 — the world's largest consumer-electronics exhibition — and connects directly to the Xiaomi Smarter Living Media Event as the centrepiece of the roadmap.",
         "bullets": [
@@ -1057,6 +1061,7 @@
         "environment": "Guided Factory Tour",
         "accent": "#7ecb8f",
         "icon": "factory",
+        "env": "assembly-line",
         "headline": "Where excellence is engineered.",
         "body": "A guided factory tour reveals the craft behind the Air Conditioner — compressor technology, smart sensors and quality testing along a living assembly line.",
         "bullets": [
@@ -1078,6 +1083,7 @@
         "environment": "Factory Doors → Premium Launch Stage",
         "accent": "#ff6900",
         "icon": "ac",
+        "env": "launch-stage",
         "headline": "The doors open.",
         "body": "The factory doors part onto a premium launch stage — the hero Air Conditioner revealed under the lights, closing the H2 AIoT strategy.",
         "bullets": [

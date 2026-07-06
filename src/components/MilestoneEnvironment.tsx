@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { timeline, allProducts } from "@/src/lib/content";
 import { liveState } from "@/src/lib/store";
-import { milestoneActivity, milestoneCenter, milestoneVisible } from "@/src/lib/timeline";
+import { isHero, milestoneActivity, milestoneCenter, milestoneVisible } from "@/src/lib/timeline";
 import { infoScreenTexture, glowTexture } from "@/src/lib/textures";
 import { ProductModel } from "./models";
 
@@ -140,12 +140,12 @@ function AssemblyLine({ accent }: { accent: string }) {
 }
 
 /** Sliding factory doors opening onto a lit launch stage (ms4). */
-function LaunchStage({ accent }: { accent: string }) {
+function LaunchStage({ accent, index }: { accent: string; index: number }) {
   const left = useRef<THREE.Mesh>(null);
   const right = useRef<THREE.Mesh>(null);
   const flash = useRef<THREE.PointLight>(null);
   useFrame(() => {
-    const open = milestoneActivity(liveState.smoothProgress, 4);
+    const open = milestoneActivity(liveState.smoothProgress, index);
     if (left.current) left.current.position.x = -2 - open * 2.4;
     if (right.current) right.current.position.x = 2 + open * 2.4;
     if (flash.current)
@@ -177,18 +177,18 @@ function LaunchStage({ accent }: { accent: string }) {
   );
 }
 
-function EnvironmentSet({ index, accent }: { index: number; accent: string }) {
-  switch (index) {
-    case 0:
+function EnvironmentSet({ env, accent, index }: { env: string; accent: string; index: number }) {
+  switch (env) {
+    case "control-room":
       return <ScreenWall accent={accent} />;
-    case 1:
+    case "experience-zone":
       return <InteractionTables accent={accent} />;
-    case 2:
+    case "ifa":
       return <IfaHall accent={accent} />;
-    case 3:
+    case "assembly-line":
       return <AssemblyLine accent={accent} />;
-    case 4:
-      return <LaunchStage accent={accent} />;
+    case "launch-stage":
+      return <LaunchStage accent={accent} index={index} />;
     default:
       return null;
   }
@@ -201,7 +201,7 @@ export function MilestoneEnvironment({ index }: { index: number }) {
   const group = useRef<THREE.Group>(null);
   const keyLight = useRef<THREE.PointLight>(null);
   const glowRef = useRef<THREE.Mesh>(null);
-  const hero = index === 2;
+  const hero = isHero(index);
 
   const accent = m.accent;
   const glowTex = useMemo(() => glowTexture(accent), [accent]);
@@ -237,7 +237,7 @@ export function MilestoneEnvironment({ index }: { index: number }) {
         />
       </mesh>
 
-      <EnvironmentSet index={index} accent={accent} />
+      <EnvironmentSet env={m.env} accent={accent} index={index} />
 
       {/* product row */}
       {products.map((p, i) => {

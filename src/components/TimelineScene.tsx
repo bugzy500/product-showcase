@@ -10,6 +10,7 @@ import {
   TL_HALF_WIDTH,
   TL_LINE_Y,
   TL_OVERVIEW_Z,
+  isHero,
   milestoneActivity,
   milestoneNodeX,
   milestoneState,
@@ -20,7 +21,7 @@ import { milestoneLabelTexture } from "@/src/lib/textures";
 function MilestoneNode({ index }: { index: number }) {
   const m = timeline!.milestones[index];
   const x = milestoneNodeX(index);
-  const hero = index === 2;
+  const hero = isHero(index);
 
   const ring = useRef<THREE.Mesh>(null);
   const coreMat = useRef<THREE.MeshBasicMaterial>(null);

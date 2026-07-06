@@ -87,8 +87,9 @@ function Stars({ rating = 4.5 }: { rating?: number }) {
 export function AmazonOverlay() {
   const progress = useExperience((s) => s.progress);
   if (!content.amazon.enabled) return null;
-  const t = localT(progress, segment("amazon"));
-  const visible = t > 0.32;
+  const amazon = segment("amazon");
+  const t = localT(progress, amazon);
+  const visible = t > 0.32 && progress < segment("slreturn").start;
 
   return (
     <AnimatePresence>

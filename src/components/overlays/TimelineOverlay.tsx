@@ -31,11 +31,16 @@ export function TimelineOverlay() {
 
   const tl = segment("timeline");
   const closing = segment("closing");
-  const amazon = segment("amazon");
 
-  // The overlay is active from the timeline reveal until Amazon takes over.
-  const inTimelineAct = progress >= tl.start - 0.01 && progress < amazon.start;
+  // The act spans the whole runway except the preserved walkthrough band.
+  const inTimelineAct = progress >= tl.start - 0.01 && progress <= closing.end;
   if (!inTimelineAct) return null;
+
+  // Hide while inside the relocated walkthrough (it has its own overlays).
+  const arrival = segment("arrival");
+  const slreturn = segment("slreturn");
+  const inWalkthrough = progress >= arrival.start && progress < slreturn.end;
+  if (inWalkthrough) return null;
 
   // Which milestone (if any) are we dwelling in?
   let activeMs = -1;
@@ -102,7 +107,10 @@ export function TimelineOverlay() {
               ))}
             </ul>
             {m.experienceB && (
-              <button className="tl-experience-b" onClick={() => scrollToProgress(0)}>
+              <button
+                className="tl-experience-b"
+                onClick={() => scrollToProgress(segment("arrival").start)}
+              >
                 {m.experienceB.label} →
               </button>
             )}

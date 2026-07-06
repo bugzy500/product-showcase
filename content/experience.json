@@ -961,8 +961,6 @@
     "title": "One Ecosystem. One Home.",
     "tagline": "Everything you just experienced, working as one",
     "description": "Every product from tonight's showcase converges into a single living ecosystem — sensing, cooling, cleaning, entertaining and caring in concert.",
-    "closingTitle": "Why This Showcase Matters",
-    "closing": "While not every product showcased is intended for launch in India, each has been carefully curated to demonstrate the depth of Xiaomi's global AIoT ecosystem and our long-term vision for smart living. This showcase is designed to strengthen Xiaomi's premium innovation perception, reinforce our technology leadership, and inspire meaningful media storytelling that extends beyond individual product launches.",
     "textAnimation": "scale"
   },
   "amazon": {
@@ -976,6 +974,7 @@
       "Buy"
     ],
     "note": "Product listing is configurable — set \"highlighted\": true and an \"amazon\" block on any product in this file.",
+    "availabilityMessage": "While not every product showcased is intended for launch in India, each has been carefully curated to demonstrate the depth of Xiaomi's global AIoT ecosystem and our long-term vision for smart living. This showcase is designed to strengthen Xiaomi's premium innovation perception, reinforce our technology leadership, and inspire meaningful media storytelling that extends beyond individual product launches.",
     "textAnimation": "slide"
   },
   "timeline": {

@@ -175,6 +175,18 @@ export function AmazonOverlay() {
           </motion.div>
 
           <footer className="az-footer">{content.amazon.note}</footer>
+
+          {t > 0.7 && (
+            <motion.div
+              className="tl-closing az-availability"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="tl-closing-title">Why This Showcase Matters</div>
+              <p className="tl-closing-msg">{content.amazon.availabilityMessage}</p>
+            </motion.div>
+          )}
         </motion.div>
       )}
     </AnimatePresence>

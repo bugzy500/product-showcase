@@ -1474,3 +1474,6 @@ body {
     display: none;
   }
 }
+
+/* Availability closing card sits above the Amazon grid, reusing .tl-closing */
+.az-availability { z-index: 40; }

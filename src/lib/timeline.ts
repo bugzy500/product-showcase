@@ -367,6 +367,9 @@ function catmull(p0: number, p1: number, p2: number, p3: number, t: number) {
 }
 
 const _oEnd = { pos: new THREE.Vector3(), look: new THREE.Vector3() };
+const _entryStart = { pos: new THREE.Vector3(), look: new THREE.Vector3() };
+const _entryEnd = { pos: new THREE.Vector3(), look: new THREE.Vector3() };
+const _returnEnd = { pos: new THREE.Vector3(), look: new THREE.Vector3() };
 
 /* ------------------------------------------------------------------ */
 /* Timeline-act camera (zoom-out → milestone travel → closing return)  */
@@ -505,25 +508,31 @@ function sampleWalkKeys(p: number, pos: THREE.Vector3, look: THREE.Vector3) {
 }
 
 /** October entry: gentle push toward the Smarter Living portal node in the timeline bay.
- *  At t→1 the cover is opaque; the walkthrough begins at arrival's first pose on the far side. */
+ *  At t=0 this is EXACTLY the milestone-travel spline's pose at ms3.start (band 1's
+ *  final sample), so the band-1→band-2 handoff is continuous. At t→1 the cover is
+ *  opaque, so we can dive deeper into the portal — the walkthrough begins at arrival's
+ *  first pose on the far side, masked by full-opacity fade. */
 function entryPose(t: number, pos: THREE.Vector3, look: THREE.Vector3) {
+  sampleTlKeys(segment("ms3").start, _entryStart.pos, _entryStart.look);
   const nodeX = milestoneNodeX(3);
+  _entryEnd.pos.set(nodeX * 0.4, TL_LINE_Y - 0.6, TL_OVERVIEW_Z - 9);
+  _entryEnd.look.set(nodeX * 0.3, TL_LINE_Y - 1.4, TL_OVERVIEW_Z - 18);
   const st = smooth(t);
-  pos.set(nodeX * 0.5, TL_LINE_Y + 1.4 - st * 0.6, TL_OVERVIEW_Z + 6 - st * 3);
-  look.set(nodeX * 0.4, TL_LINE_Y - st * 0.8, TL_OVERVIEW_Z - 2 - st * 6);
+  pos.copy(_entryStart.pos).lerp(_entryEnd.pos, st);
+  look.copy(_entryStart.look).lerp(_entryEnd.look, st);
 }
 
 /** October return: from the venue back to the timeline at the October node.
- *  At t→1 we settle on the milestone-travel pose so band 6 continues seamlessly. */
+ *  At t=0 this is the amazon pull-back's end pose (already continuous — unchanged).
+ *  At t=1 this is EXACTLY the milestone-travel spline's pose at ms4.start (band 6's
+ *  first sample), so the band-5→band-6 handoff is continuous. */
 function returnPose(t: number, pos: THREE.Vector3, look: THREE.Vector3) {
-  const nodeX = milestoneNodeX(3);
-  const st = smooth(t);
-  const endPos = new THREE.Vector3(nodeX * 0.6, TL_LINE_Y + 1.5, TL_OVERVIEW_Z + 6);
-  const endLook = new THREE.Vector3(nodeX * 0.5, TL_LINE_Y, TL_OVERVIEW_Z);
+  sampleTlKeys(segment("ms4").start, _returnEnd.pos, _returnEnd.look);
   const startPos = new THREE.Vector3(0, 3.0, FINALE_Z + 16);
   const startLook = new THREE.Vector3(0, 2.6, FINALE_Z);
-  pos.copy(startPos).lerp(endPos, st);
-  look.copy(startLook).lerp(endLook, st);
+  const st = smooth(t);
+  pos.copy(startPos).lerp(_returnEnd.pos, st);
+  look.copy(startLook).lerp(_returnEnd.look, st);
 }
 
 /**

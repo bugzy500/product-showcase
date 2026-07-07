@@ -249,12 +249,22 @@ export function milestoneActivity(p: number, i: number): number {
   return clamp01(1 - (Math.abs(t - 0.5) - 0.5) / 0.28);
 }
 
+/** Progress margin by which a milestone bay outlives its own segment.
+ *  MUST stay well below the narrowest milestone segment width (~0.04) and be a
+ *  FIXED absolute value — not a fraction of the segment — because ms2 (IFA) is
+ *  3.6× wider than its neighbours, so a proportional margin would let the wide
+ *  bay bleed across the narrow ones. All bays share a single Z-row spaced only
+ *  ~3 world-units apart in X while their environments span 7–18 units wide, so
+ *  any overlap in mount windows makes one bay's geometry (e.g. the September
+ *  experience-zone's white tables) float into a neighbour's framed view. */
+const MS_VISIBLE_MARGIN = 0.003;
+
 /** Whether milestone i's environment should be mounted at all (culling).
  *  A tight window keeps adjacent bays (which share a Z-row) from bleeding
  *  into each other at the dwell point. */
 export function milestoneVisible(p: number, i: number): boolean {
   const s = milestoneSegment(i);
-  return p > s.start - 0.02 && p < s.end + 0.02;
+  return p > s.start - MS_VISIBLE_MARGIN && p < s.end + MS_VISIBLE_MARGIN;
 }
 
 /** Node visual state per the brief: completed | active | future. */

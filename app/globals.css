@@ -116,16 +116,16 @@ body {
 
 .keynote-panel {
   pointer-events: auto;
-  width: min(1240px, 100%);
-  display: grid;
-  grid-template-columns: 7fr 3fr;
-  gap: clamp(24px, 4vw, 64px);
-  align-items: start;
+  width: min(840px, 100%);
+  display: flex;
+  justify-content: center;
 }
 
 .keynote-left {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .keynote-brand {
@@ -164,9 +164,10 @@ body {
 .keynote-accents {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 6px;
   margin: 18px 0 22px;
-  transform-origin: left center;
+  transform-origin: center;
 }
 
 .keynote-accents span {
@@ -207,6 +208,7 @@ body {
 .keynote-cta {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 22px;
   margin-top: 30px;
   flex-wrap: wrap;
@@ -1185,7 +1187,7 @@ body {
 .tl-intro {
   position: fixed;
   top: 16vh;
-  left: 50%;
+  left: 35%;
   transform: translateX(-50%);
   z-index: 22;
   width: min(620px, 90vw);

@@ -26,8 +26,14 @@ function jumpToMilestone(i: number) {
 export function TimelineOverlay() {
   const progress = useExperience((s) => s.progress);
   const focus = useExperience((s) => s.focus);
+  const introDone = useExperience((s) => s.introDone);
 
   if (!timeline?.enabled || focus) return null;
+
+  // The keynote landing hero (IntroOverlay) owns the very top of the runway and
+  // shows the same intro copy. Suppress our overview caption while it's on
+  // screen so the two don't stack into a duplicated card.
+  const keynoteVisible = !introDone && progress < 0.05;
 
   const tl = segment("timeline");
   const closing = segment("closing");
@@ -62,7 +68,7 @@ export function TimelineOverlay() {
     <>
       {/* intro caption while on the overview, before diving into a milestone */}
       <AnimatePresence>
-        {!m && !showClosing && (
+        {!m && !showClosing && !keynoteVisible && (
           <motion.aside
             key="tl-intro"
             className="tl-intro"

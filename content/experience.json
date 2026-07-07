@@ -961,8 +961,6 @@
     "title": "One Ecosystem. One Home.",
     "tagline": "Everything you just experienced, working as one",
     "description": "Every product from tonight's showcase converges into a single living ecosystem — sensing, cooling, cleaning, entertaining and caring in concert.",
-    "closingTitle": "Why This Showcase Matters",
-    "closing": "While not every product showcased is intended for launch in India, each has been carefully curated to demonstrate the depth of Xiaomi's global AIoT ecosystem and our long-term vision for smart living. This showcase is designed to strengthen Xiaomi's premium innovation perception, reinforce our technology leadership, and inspire meaningful media storytelling that extends beyond individual product launches.",
     "textAnimation": "scale"
   },
   "amazon": {
@@ -976,6 +974,7 @@
       "Buy"
     ],
     "note": "Product listing is configurable — set \"highlighted\": true and an \"amazon\" block on any product in this file.",
+    "availabilityMessage": "While not every product showcased is intended for launch in India, each has been carefully curated to demonstrate the depth of Xiaomi's global AIoT ecosystem and our long-term vision for smart living. This showcase is designed to strengthen Xiaomi's premium innovation perception, reinforce our technology leadership, and inspire meaningful media storytelling that extends beyond individual product launches.",
     "textAnimation": "slide"
   },
   "timeline": {
@@ -991,9 +990,10 @@
         "id": "purifier-launch",
         "month": "August 2026",
         "dateLabel": "AUG",
-        "title": "Air Purifier Launch",
+        "title": "Air Purifier Pre-Heat & Launch",
         "focus": "Pre-heat phase (7–10 days)",
         "environment": "Digital Marketing Control Room",
+        "env": "control-room",
         "accent": "#5ec8f2",
         "icon": "purifier",
         "headline": "The launch begins before the launch.",
@@ -1012,9 +1012,10 @@
         "id": "aiot-offline",
         "month": "September 2026",
         "dateLabel": "SEP",
-        "title": "AIoT Offline Experience — Q Note Launch",
+        "title": "AIoT Offline Experience",
         "focus": "Interactive experience inside the offline smartphone launch venue",
         "environment": "Premium Experience Zone",
+        "env": "experience-zone",
         "accent": "#ffb46a",
         "icon": "powerbank",
         "headline": "AIoT, hands-on.",
@@ -1029,36 +1030,79 @@
         "products": ["pb-67w", "pb-165w", "pb-ultrathin", "pb-qi22", "purifier-6", "purifier-4compact"]
       },
       {
-        "id": "hero-ifa",
-        "month": "4–6 September 2026",
-        "dateLabel": "SEP 4–6",
-        "title": "Hero Milestone — IFA Berlin & Smarter Living",
-        "focus": "Strategic peak of the roadmap",
+        "id": "ifa-berlin",
+        "month": "4–8 September 2026",
+        "dateLabel": "SEP 4–8",
+        "title": "IFA Berlin 2026",
+        "focus": "The world's largest consumer-electronics exhibition",
         "environment": "IFA Berlin 2026 · Global Showcase",
+        "env": "ifa",
         "accent": "#ff6900",
         "icon": "globe",
         "headline": "The world stage.",
-        "body": "An airport departure carries the story to IFA Berlin 2026 — the world's largest consumer-electronics exhibition — and connects directly to the Xiaomi Smarter Living Media Event as the centrepiece of the roadmap.",
+        "body": "Xiaomi India takes its media to IFA Berlin 2026 — an immersive walk from the Messe Berlin entrance across the exhibition floor, showcasing the depth of the global AIoT ecosystem.",
         "bullets": [
-          "Airport departure sequence",
-          "IFA Berlin halls & innovations",
-          "Global showcase presence",
-          "Xiaomi Smarter Living Media Event"
+          "Arrival at Messe Berlin",
+          "IFA entrance plaza",
+          "Interactive floor map",
+          "Global showcase presence"
         ],
-        "products": [],
-        "experienceB": { "label": "Enter the Smarter Living Media Event", "action": "replay" }
+        "products": []
       },
       {
-        "id": "ac-factory",
+        "id": "smarter-living",
+        "month": "October 2026",
+        "dateLabel": "OCT",
+        "title": "Xiaomi Smarter Living Media Event",
+        "focus": "The flagship immersive walkthrough",
+        "environment": "Smarter Living Media Event Venue",
+        "env": "sl-portal",
+        "accent": "#ff6900",
+        "icon": "globe",
+        "hero": true,
+        "headline": "Step inside the flagship experience.",
+        "body": "The October milestone opens directly into the Xiaomi Smarter Living Media Event — the full cinematic venue walkthrough, from the entrance keynote through every product zone to the Grand Finale ecosystem reveal.",
+        "bullets": [
+          "Entrance keynote",
+          "Eight product experience zones",
+          "Grand Finale ecosystem reveal",
+          "Amazon India availability"
+        ],
+        "products": [],
+        "experienceB": { "label": "Enter the Media Event", "action": "replay" }
+      },
+      {
+        "id": "ac-preheat",
         "month": "November 2026",
         "dateLabel": "NOV",
-        "title": "AC Pre-Heat & Factory Visit",
+        "title": "Air Conditioner Pre-Heat",
+        "focus": "Building anticipation for the AC launch",
+        "environment": "Digital Marketing Control Room",
+        "env": "control-room",
+        "accent": "#7ecb8f",
+        "icon": "ac",
+        "headline": "Warming up the launch.",
+        "body": "A pre-heat campaign builds anticipation for the Air Conditioner — teasers, creator content and countdown dashboards orchestrated ahead of the reveal.",
+        "bullets": [
+          "Teaser campaign",
+          "Creator content",
+          "Countdown dashboards",
+          "Social calendar"
+        ],
+        "products": ["ac-fresh-air-pro", "ac-natural-wind"]
+      },
+      {
+        "id": "factory-visit",
+        "month": "November 2026",
+        "dateLabel": "NOV",
+        "title": "Large Appliance Factory Visit",
         "focus": "Engineering excellence and storytelling",
         "environment": "Guided Factory Tour",
+        "env": "assembly-line",
         "accent": "#7ecb8f",
         "icon": "factory",
         "headline": "Where excellence is engineered.",
-        "body": "A guided factory tour reveals the craft behind the Air Conditioner — compressor technology, smart sensors and quality testing along a living assembly line.",
+        "body": "A guided factory tour reveals the craft behind the large appliances — compressor technology, smart sensors and quality testing along a living assembly line.",
         "bullets": [
           "Component manufacturing",
           "Compressor technology",
@@ -1076,6 +1120,7 @@
         "title": "Air Conditioner Launch",
         "focus": "Culmination of the H2 AIoT strategy",
         "environment": "Factory Doors → Premium Launch Stage",
+        "env": "launch-stage",
         "accent": "#ff6900",
         "icon": "ac",
         "headline": "The doors open.",

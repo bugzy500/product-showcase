@@ -87,8 +87,9 @@ function Stars({ rating = 4.5 }: { rating?: number }) {
 export function AmazonOverlay() {
   const progress = useExperience((s) => s.progress);
   if (!content.amazon.enabled) return null;
-  const t = localT(progress, segment("amazon"));
-  const visible = t > 0.32;
+  const amazon = segment("amazon");
+  const t = localT(progress, amazon);
+  const visible = t > 0.32 && progress < segment("slreturn").start;
 
   return (
     <AnimatePresence>
@@ -175,6 +176,18 @@ export function AmazonOverlay() {
           </motion.div>
 
           <footer className="az-footer">{content.amazon.note}</footer>
+
+          {t > 0.7 && (
+            <motion.div
+              className="tl-closing az-availability"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="tl-closing-title">Why This Showcase Matters</div>
+              <p className="tl-closing-msg">{content.amazon.availabilityMessage}</p>
+            </motion.div>
+          )}
         </motion.div>
       )}
     </AnimatePresence>

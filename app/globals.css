@@ -1474,3 +1474,19 @@ body {
     display: none;
   }
 }
+
+/* Availability closing card sits above the Amazon grid, reusing .tl-closing */
+.az-availability { z-index: 40; }
+
+/* October entry/return transition cover — masks the ms3→arrival world jump
+   with the preserved Smarter Living event keynote, and veils the return. */
+.transition-cover {
+  position: fixed; inset: 0; z-index: 45;
+  background: radial-gradient(circle at 50% 45%, #0b0d13 0%, #05060a 100%);
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none; text-align: center;
+}
+.transition-keynote { max-width: 620px; padding: 0 24px; }
+.transition-kicker { letter-spacing: 0.32em; text-transform: uppercase; font-size: 12px; color: #ff8a3c; margin-bottom: 18px; }
+.transition-heading { font-size: clamp(28px, 5vw, 54px); font-weight: 600; color: #f4f6fb; margin: 0 0 12px; }
+.transition-sub { color: #aab2c4; font-size: 15px; }

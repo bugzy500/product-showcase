@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { content, allProducts } from "./content";
+import { content, allProducts, timeline } from "./content";
 
 /* ------------------------------------------------------------------ */
 /* World layout constants                                              */
@@ -32,17 +32,20 @@ export interface Segment {
 }
 
 const weights: Array<[string, number]> = [
+  ["timeline", 1.2], // roadmap overview reveal (homepage)
+  ["ms0", 1.0], // Aug — Air Purifier Pre-Heat & Launch
+  ["ms1", 1.0], // Sep — AIoT Offline Experience
+  ["ms2", 2.6], // Sep 4–8 — IFA Berlin 2026 (extra runway; Phase B fills sub-beats)
+  ["ms3", 1.0], // Oct — Smarter Living entry transition (dive into the walkthrough)
   ["arrival", 1.5],
   ...content.zones.map((z): [string, number] => [z.id, 1]),
   ["finale", 1.7],
-  ["timeline", 1.2],
-  ["ms0", 1.0],
-  ["ms1", 1.0],
-  ["ms2", 1.6], // hero milestone (September) — strategic peak, gets more runway
-  ["ms3", 1.0],
-  ["ms4", 1.1],
-  ["closing", 1.2],
   ["amazon", 1.1],
+  ["slreturn", 0.9], // camera returns from the venue to the October node
+  ["ms4", 1.0], // Nov — Air Conditioner Pre-Heat
+  ["ms5", 1.1], // Nov — Large Appliance Factory Visit
+  ["ms6", 1.0], // Dec — Air Conditioner Launch
+  ["closing", 1.2], // "One Shared Vision" — the true end
 ];
 
 const totalWeight = weights.reduce((a, [, w]) => a + w, 0);
@@ -66,7 +69,7 @@ export const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 export const localT = (p: number, seg: Segment) =>
   clamp01((p - seg.start) / (seg.end - seg.start));
 
-export const zoneSegment = (i: number) => segments[i + 1];
+export const zoneSegment = (i: number) => segment(content.zones[i].id);
 
 /** Index of the zone whose segment contains p, or -1. */
 export function activeZoneIndex(p: number): number {
@@ -202,7 +205,7 @@ export const finaleSlots: FinaleSlot[] = (() => {
 /* AIoT H2 2026 timeline                                               */
 /* ------------------------------------------------------------------ */
 
-export const MILESTONE_COUNT = 5;
+export const MILESTONE_COUNT = 7;
 
 /** The illuminated timeline sits in a deep bay beyond the finale rotunda. */
 export const TL_OVERVIEW_Z = FINALE_Z - 46;
@@ -216,10 +219,15 @@ export function milestoneNodeX(i: number): number {
   return -TL_HALF_WIDTH + (i / (MILESTONE_COUNT - 1)) * TL_HALF_WIDTH * 2;
 }
 
+/** Whether milestone i is the flagship (data-driven; replaces the old hardcoded index). */
+export function isHero(i: number): boolean {
+  return !!timeline?.milestones[i]?.hero;
+}
+
 /** Z centre of milestone environment i (its bay is set back behind the line;
  *  the hero bay sits slightly deeper so it reads as grander). */
 export function milestoneCenterZ(i: number): number {
-  return TL_OVERVIEW_Z - TL_BAY_DEPTH - (i === 2 ? 4 : 0);
+  return TL_OVERVIEW_Z - TL_BAY_DEPTH - (isHero(i) ? 4 : 0);
 }
 
 /** World centre of milestone environment i. Bays fan slightly toward centre. */
@@ -359,6 +367,9 @@ function catmull(p0: number, p1: number, p2: number, p3: number, t: number) {
 }
 
 const _oEnd = { pos: new THREE.Vector3(), look: new THREE.Vector3() };
+const _entryStart = { pos: new THREE.Vector3(), look: new THREE.Vector3() };
+const _entryEnd = { pos: new THREE.Vector3(), look: new THREE.Vector3() };
+const _returnEnd = { pos: new THREE.Vector3(), look: new THREE.Vector3() };
 
 /* ------------------------------------------------------------------ */
 /* Timeline-act camera (zoom-out → milestone travel → closing return)  */
@@ -386,11 +397,12 @@ const tlKeys: TlKey[] = (() => {
   });
 
   for (let i = 0; i < MILESTONE_COUNT; i++) {
+    if (i === 3) continue; // ms3 (Oct) is the walkthrough entry — handled by the entry transition
     const s = milestoneSegment(i);
     const w = s.end - s.start;
     const c = milestoneCenter(i);
     const nodeX = milestoneNodeX(i);
-    const hero = i === 2;
+    const hero = isHero(i);
     // approach — hang on the line above the node
     keys.push({
       p: s.start + w * 0.12,
@@ -416,7 +428,6 @@ const tlKeys: TlKey[] = (() => {
   return keys;
 })();
 
-const _tlEnd = { pos: new THREE.Vector3(), look: new THREE.Vector3() };
 const _tlWideP = new THREE.Vector3(0, TL_LINE_Y + 11, TL_OVERVIEW_Z + 48);
 const _tlWideL = new THREE.Vector3(0, TL_LINE_Y, TL_OVERVIEW_Z);
 
@@ -444,10 +455,12 @@ function sampleTlKeys(p: number, pos: THREE.Vector3, look: THREE.Vector3) {
 }
 
 /**
- * Camera during the timeline act (timeline + ms0..ms4 + closing).
- * The closing phase rises to a wide "all nodes lit" shot, then glides back
- * to the finale rotunda (orbitPose(1)) so the existing Amazon branch — which
- * starts from that same pose — stays continuous.
+ * Camera during the timeline act. Called for two disjoint bands of the new
+ * runway: the opening overview + ms0..ms2 travel (p < ms3.start) and the
+ * ms4..ms6 travel + closing (p >= ms4.start). `closing` is now the FINAL
+ * segment — nothing follows it — so the closing phase simply HOLDS the wide
+ * "all nodes lit" overview (with a gentle pull-back) rather than handing off
+ * to the finale rotunda.
  */
 function sampleTimelineCamera(
   p: number,
@@ -457,47 +470,21 @@ function sampleTimelineCamera(
   const closing = segment("closing");
   const cl = localT(p, closing);
   if (cl > 0) {
-    orbitPose(1, _tlEnd.pos, _tlEnd.look);
-    const back = smooth(clamp01((cl - 0.5) / 0.5));
-    pos.copy(_tlWideP).lerp(_tlEnd.pos, back);
-    look.copy(_tlWideL).lerp(_tlEnd.look, back);
+    // Hold the wide overview; ease a touch further back across the segment.
+    const back = smooth(cl) * 6;
+    pos.set(_tlWideP.x, _tlWideP.y + back * 0.35, _tlWideP.z + back);
+    look.copy(_tlWideL);
     return;
   }
   sampleTlKeys(p, pos, look);
 }
 
 /**
- * Sample the walkthrough camera at progress p. Writes into pos/look.
- * Covers the keyframed walk, the procedural finale orbit and the
- * Amazon pull-back.
+ * Sample the preserved walkthrough keyframes (arrival → 8 zones) at progress
+ * p via the catmull spline. Writes into pos/look. Extracted from the old
+ * `sampleCamera` tail so band 3 of the new dispatch can reuse it verbatim.
  */
-export function sampleCamera(
-  p: number,
-  pos: THREE.Vector3,
-  look: THREE.Vector3
-) {
-  const f = segment("finale");
-  const am = segment("amazon");
-  const tl = segment("timeline");
-
-  if (p >= am.start) {
-    const t = smooth(localT(p, am));
-    orbitPose(1, _oEnd.pos, _oEnd.look);
-    pos.copy(_oEnd.pos).lerp(new THREE.Vector3(0, 3.0, FINALE_Z + 16), t);
-    look.copy(_oEnd.look).lerp(new THREE.Vector3(0, 2.6, FINALE_Z), t);
-    return;
-  }
-
-  if (p >= tl.start) {
-    sampleTimelineCamera(p, pos, look);
-    return;
-  }
-
-  if (p >= f.start) {
-    orbitPose(smooth(localT(p, f)) * 0.999, pos, look);
-    return;
-  }
-
+function sampleWalkKeys(p: number, pos: THREE.Vector3, look: THREE.Vector3) {
   const keys = camKeys;
   let i = 0;
   while (i < keys.length - 1 && keys[i + 1].p < p) i++;
@@ -507,7 +494,6 @@ export function sampleCamera(
   const k3 = keys[Math.min(i + 2, keys.length - 1)];
   const span = Math.max(k2.p - k1.p, 1e-5);
   const t = clamp01((p - k1.p) / span);
-
   pos.set(
     catmull(k0.pos[0], k1.pos[0], k2.pos[0], k3.pos[0], t),
     catmull(k0.pos[1], k1.pos[1], k2.pos[1], k3.pos[1], t),
@@ -519,6 +505,84 @@ export function sampleCamera(
     k1.look[1] + (k2.look[1] - k1.look[1]) * st,
     k1.look[2] + (k2.look[2] - k1.look[2]) * st
   );
+}
+
+/** October entry: gentle push toward the Smarter Living portal node in the timeline bay.
+ *  At t=0 this is EXACTLY the milestone-travel spline's pose at ms3.start (band 1's
+ *  final sample), so the band-1→band-2 handoff is continuous. At t→1 the cover is
+ *  opaque, so we can dive deeper into the portal — the walkthrough begins at arrival's
+ *  first pose on the far side, masked by full-opacity fade. */
+function entryPose(t: number, pos: THREE.Vector3, look: THREE.Vector3) {
+  sampleTlKeys(segment("ms3").start, _entryStart.pos, _entryStart.look);
+  const nodeX = milestoneNodeX(3);
+  _entryEnd.pos.set(nodeX * 0.4, TL_LINE_Y - 0.6, TL_OVERVIEW_Z - 9);
+  _entryEnd.look.set(nodeX * 0.3, TL_LINE_Y - 1.4, TL_OVERVIEW_Z - 18);
+  const st = smooth(t);
+  pos.copy(_entryStart.pos).lerp(_entryEnd.pos, st);
+  look.copy(_entryStart.look).lerp(_entryEnd.look, st);
+}
+
+/** October return: from the venue back to the timeline at the October node.
+ *  At t=0 this is the amazon pull-back's end pose (already continuous — unchanged).
+ *  At t=1 this is EXACTLY the milestone-travel spline's pose at ms4.start (band 6's
+ *  first sample), so the band-5→band-6 handoff is continuous. */
+function returnPose(t: number, pos: THREE.Vector3, look: THREE.Vector3) {
+  sampleTlKeys(segment("ms4").start, _returnEnd.pos, _returnEnd.look);
+  const startPos = new THREE.Vector3(0, 3.0, FINALE_Z + 16);
+  const startLook = new THREE.Vector3(0, 2.6, FINALE_Z);
+  const st = smooth(t);
+  pos.copy(startPos).lerp(_returnEnd.pos, st);
+  look.copy(startLook).lerp(_returnEnd.look, st);
+}
+
+/**
+ * Master camera dispatch across the timeline-first runway. Routes by segment
+ * band: timeline overview + ms0..ms2 travel, the October entry transition,
+ * the preserved arrival→zones→finale walkthrough, the Amazon pull-back, the
+ * October return, and finally ms4..ms6 travel + closing.
+ */
+export function sampleCamera(p: number, pos: THREE.Vector3, look: THREE.Vector3) {
+  const ms3 = segment("ms3");
+  const arr = segment("arrival");
+  const f = segment("finale");
+  const am = segment("amazon");
+  const slr = segment("slreturn");
+  const ms4 = segment("ms4");
+
+  // 1. timeline overview + ms0..ms2 milestone travel
+  if (p < ms3.start) {
+    sampleTimelineCamera(p, pos, look);
+    return;
+  }
+  // 2. ms3 — October entry transition (push toward the portal; cover fades in via Task 4)
+  if (p < arr.start) {
+    entryPose(localT(p, ms3), pos, look);
+    return;
+  }
+  // 3. arrival → 8 zones → finale — the preserved walkthrough (keys auto-relocated)
+  if (p < am.start) {
+    if (p >= f.start) {
+      orbitPose(smooth(localT(p, f)) * 0.999, pos, look);
+    } else {
+      sampleWalkKeys(p, pos, look);
+    }
+    return;
+  }
+  // 4. amazon — existing pull-back
+  if (p < slr.start) {
+    const t = smooth(localT(p, am));
+    orbitPose(1, _oEnd.pos, _oEnd.look);
+    pos.copy(_oEnd.pos).lerp(new THREE.Vector3(0, 3.0, FINALE_Z + 16), t);
+    look.copy(_oEnd.look).lerp(new THREE.Vector3(0, 2.6, FINALE_Z), t);
+    return;
+  }
+  // 5. slreturn — return from the venue to the October node (cover masks the jump)
+  if (p < ms4.start) {
+    returnPose(localT(p, slr), pos, look);
+    return;
+  }
+  // 6. ms4..ms6 milestone travel + closing
+  sampleTimelineCamera(p, pos, look);
 }
 
 /** How "active" zone i is at progress p — 0 outside, ramps to 1 inside. */

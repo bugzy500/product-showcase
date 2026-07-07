@@ -70,6 +70,10 @@ export interface Milestone {
   accent: string;
   /** icon key drawn as an inline SVG in the overlay */
   icon: string;
+  /** Themed environment key: control-room | experience-zone | ifa | sl-portal | assembly-line | launch-stage */
+  env: string;
+  /** Flagship milestone — larger node/glow and wider camera framing. */
+  hero?: boolean;
   headline: string;
   body: string;
   bullets: string[];
@@ -122,6 +126,8 @@ export interface ExperienceContent {
     subtitle: string;
     journey: string[];
     note: string;
+    /** Approved concluding message shown as a floating glass card after the Amazon transition. */
+    availabilityMessage: string;
     textAnimation?: TextAnimation;
   };
   timeline?: TimelineContent;

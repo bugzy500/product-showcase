@@ -35,7 +35,7 @@ const weights: Array<[string, number]> = [
   ["timeline", 1.2], // roadmap overview reveal (homepage)
   ["ms0", 1.0], // Aug — Air Purifier Pre-Heat & Launch
   ["ms1", 1.0], // Sep — AIoT Offline Experience
-  ["ms2", 2.6], // Sep 4–8 — IFA Berlin 2026 (extra runway; Phase B fills sub-beats)
+  ["ms2", 3.6], // Sep 4–8 — IFA Berlin 2026 (extra runway for the cinematic flythrough)
   ["ms3", 1.0], // Oct — Smarter Living entry transition (dive into the walkthrough)
   ["arrival", 1.5],
   ...content.zones.map((z): [string, number] => [z.id, 1]),
@@ -403,6 +403,24 @@ const tlKeys: TlKey[] = (() => {
     const c = milestoneCenter(i);
     const nodeX = milestoneNodeX(i);
     const hero = isHero(i);
+
+    if (i === 2) {
+      // IFA Berlin cinematic flythrough (CR-01):
+      // arrival at Messe Berlin → entrance plaza → floor map → enter facade → hall → rise.
+      keys.push({ p: s.start + w * 0.08, pos: [c.x, 5.5, c.z + 19], look: [c.x, 4.0, c.z - 6] });
+      keys.push({ p: s.start + w * 0.28, pos: [c.x, 2.0, c.z + 8], look: [c.x, 2.6, c.z - 4.5] });
+      keys.push({ p: s.start + w * 0.48, pos: [c.x, 7.0, c.z + 11], look: [c.x, 0.3, c.z + 6.5] });
+      keys.push({ p: s.start + w * 0.68, pos: [c.x, 4.2, c.z - 1], look: [c.x, 2.8, c.z - 14] });
+      keys.push({ p: s.start + w * 0.86, pos: [c.x, 2.4, c.z - 9], look: [c.x - 4, 2.4, c.z - 16] });
+      // rise back to the line (matches the standard rise so the ms3 entry stays continuous)
+      keys.push({
+        p: s.end - w * 0.06,
+        pos: [nodeX * 0.6, TL_LINE_Y + 1.5, TL_OVERVIEW_Z + 6],
+        look: [nodeX * 0.5, TL_LINE_Y, TL_OVERVIEW_Z],
+      });
+      continue;
+    }
+
     // approach — hang on the line above the node
     keys.push({
       p: s.start + w * 0.12,

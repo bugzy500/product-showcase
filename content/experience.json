@@ -1047,7 +1047,54 @@
           "Interactive floor map",
           "Global showcase presence"
         ],
-        "products": []
+        "products": [],
+        "ifa": {
+          "dates": "4–8 September 2026",
+          "venue": "Messe Berlin",
+          "banner": "For the bold. For the curious. For all.",
+          "zones": [
+            { "name": "Home Appliances", "color": "#1565c0" },
+            { "name": "Smart Home", "color": "#e53935" },
+            { "name": "Communication & Connectivity", "color": "#33c9dc" },
+            { "name": "Computing & Gaming", "color": "#ffd600" },
+            { "name": "Home & Entertainment", "color": "#e0359c" },
+            { "name": "Audio", "color": "#00897b" },
+            { "name": "Beauty Tech & Wellbeing", "color": "#f57c00" },
+            { "name": "Mobility", "color": "#8e24aa" },
+            { "name": "Creator Hub", "color": "#43a047" },
+            { "name": "Content Creation", "color": "#66bb6a" },
+            { "name": "IFA Next", "color": "#2e7d32" },
+            { "name": "Innovation Stage", "color": "#ff6900" },
+            { "name": "Dream Stage", "color": "#ff8f3c" },
+            { "name": "Retail Innovation Zone", "color": "#fb8c00" },
+            { "name": "IFA Global Markets", "color": "#6a1b9a" },
+            { "name": "Reseller Park", "color": "#7e57c2" },
+            { "name": "IFA GM Expert Talks Stage", "color": "#5c6bc0" }
+          ],
+          "halls": [
+            {
+              "id": "home-appliances",
+              "name": "Home Appliances",
+              "color": "#1565c0",
+              "sign": "Climate · Laundry · Kitchen",
+              "products": ["ac-fresh-air-pro", "purifier-6"]
+            },
+            {
+              "id": "smart-home",
+              "name": "Smart Home",
+              "color": "#e53935",
+              "sign": "Connected living · Automation",
+              "products": ["purifier-4compact", "pb-qi22"]
+            },
+            {
+              "id": "home-entertainment",
+              "name": "Home & Entertainment",
+              "color": "#e0359c",
+              "sign": "Displays · Audio · Smart TV",
+              "products": ["tv-miniled"]
+            }
+          ]
+        }
       },
       {
         "id": "smarter-living",

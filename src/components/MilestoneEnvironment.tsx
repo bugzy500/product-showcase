@@ -8,6 +8,7 @@ import { liveState } from "@/src/lib/store";
 import { isHero, milestoneActivity, milestoneCenter, milestoneVisible } from "@/src/lib/timeline";
 import { infoScreenTexture, glowTexture } from "@/src/lib/textures";
 import { ProductModel } from "./models";
+import { IfaExperience } from "./IfaExperience";
 
 const plinthMat = new THREE.MeshStandardMaterial({ color: "#d6d8dc", roughness: 0.5, metalness: 0.12 });
 const stageMat = new THREE.MeshStandardMaterial({ color: "#16181f", roughness: 0.3, metalness: 0.5 });
@@ -72,38 +73,6 @@ function InteractionTables({ accent }: { accent: string }) {
           </mesh>
         </group>
       ))}
-    </group>
-  );
-}
-
-/** Grand IFA arch + departure board motif (ms2 hero). */
-function IfaHall({ accent }: { accent: string }) {
-  const boardTex = useMemo(
-    () => infoScreenTexture("IFA BERLIN 2026", "Departures · Global Showcase", accent),
-    [accent]
-  );
-  const arches = [0, -5, -10];
-  return (
-    <group>
-      {arches.map((z, i) => (
-        <group key={i} position={[0, 0, z]}>
-          <mesh position={[-5, 3, 0]} material={metalMat}>
-            <boxGeometry args={[0.4, 6, 0.4]} />
-          </mesh>
-          <mesh position={[5, 3, 0]} material={metalMat}>
-            <boxGeometry args={[0.4, 6, 0.4]} />
-          </mesh>
-          <mesh position={[0, 6, 0]}>
-            <boxGeometry args={[10.4, 0.4, 0.4]} />
-            <meshBasicMaterial color={accent} transparent opacity={0.5 - i * 0.12} toneMapped={false} />
-          </mesh>
-        </group>
-      ))}
-      {/* departure "board" */}
-      <mesh position={[0, 4.2, -1]}>
-        <planeGeometry args={[6, 1.4]} />
-        <meshBasicMaterial map={boardTex} toneMapped={false} />
-      </mesh>
     </group>
   );
 }
@@ -216,7 +185,7 @@ function EnvironmentSet({ env, accent, index }: { env: string; accent: string; i
     case "experience-zone":
       return <InteractionTables accent={accent} />;
     case "ifa":
-      return <IfaHall accent={accent} />;
+      return <IfaExperience index={index} accent={accent} />;
     case "assembly-line":
       return <AssemblyLine accent={accent} />;
     case "launch-stage":

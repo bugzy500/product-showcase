@@ -60,6 +60,33 @@ export interface SnapshotItem {
   value: string;
 }
 
+/** A colour-coded exhibition zone on the IFA floor map. */
+export interface IfaZone {
+  name: string;
+  color: string;
+}
+
+/** A representative exhibition hall the camera dips into during the IFA flythrough. */
+export interface IfaHallDef {
+  id: string;
+  name: string;
+  color: string;
+  /** Signage / LED-wall sub-line. */
+  sign: string;
+  /** Product ids (into allProducts) shown on the hall's demo plinths. */
+  products: string[];
+}
+
+/** Rich IFA Berlin experience content (CR-01). Present on the IFA milestone only. */
+export interface IfaContent {
+  /** Single source-of-truth date, e.g. "4–8 September 2026". */
+  dates: string;
+  venue: string;
+  banner: string;
+  zones: IfaZone[];
+  halls: IfaHallDef[];
+}
+
 export interface Milestone {
   id: string;
   month: string;
@@ -81,6 +108,8 @@ export interface Milestone {
   products: string[];
   /** Hero milestone only: the "enter the existing experience" action. */
   experienceB?: { label: string; action: "replay" };
+  /** IFA milestone only: the rich IFA Berlin experience content. */
+  ifa?: IfaContent;
 }
 
 export interface TimelineContent {

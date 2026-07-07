@@ -11,12 +11,15 @@ import { infoScreenTexture, glowTexture } from "@/src/lib/textures";
 import { ProductModel } from "./models";
 import { IfaExperience } from "./IfaExperience";
 
-const plinthMat = new THREE.MeshStandardMaterial({ color: "#d6d8dc", roughness: 0.5, metalness: 0.12 });
 const stageMat = new THREE.MeshStandardMaterial({ color: "#16181f", roughness: 0.3, metalness: 0.5 });
 const metalMat = new THREE.MeshStandardMaterial({ color: "#83878e", metalness: 0.85, roughness: 0.35 });
 const stationBaseMat = new THREE.MeshStandardMaterial({ color: "#1b1f28", roughness: 0.42, metalness: 0.55 });
 const stationTopMat = new THREE.MeshStandardMaterial({ color: "#d0d3d8", roughness: 0.45, metalness: 0.18 });
 const screenFrameMat = new THREE.MeshStandardMaterial({ color: "#0d0f15", roughness: 0.5, metalness: 0.4 });
+const beltMat = new THREE.MeshStandardMaterial({ color: "#111318", roughness: 0.82, metalness: 0.12 });
+const chassisMat = new THREE.MeshStandardMaterial({ color: "#b9bdc5", metalness: 0.82, roughness: 0.3 });
+const palletMat = new THREE.MeshStandardMaterial({ color: "#20242e", roughness: 0.5, metalness: 0.55 });
+const gantryMat = new THREE.MeshStandardMaterial({ color: "#6b7078", metalness: 0.8, roughness: 0.4 });
 
 /** Products to display in this milestone, laid out in a short row. */
 function useMilestoneProducts(index: number) {
@@ -166,33 +169,228 @@ function InteractionStations({ products, accent }: { products: FlatProduct[]; ac
   );
 }
 
-/** Assembly-line rail with moving carriers (ms3 factory). */
-function AssemblyLine({ accent }: { accent: string }) {
-  const carriers = useRef<THREE.Group>(null);
+/** A partially-assembled large-appliance chassis riding a pallet down the line.
+ *  Higher `stage` = further along assembly (taller body, more fitted parts). */
+function Chassis({ accent, stage }: { accent: string; stage: number }) {
+  const led = useMemo(() => new THREE.MeshBasicMaterial({ color: accent, toneMapped: false }), [accent]);
+  const h = 0.55 + stage * 0.24;
+  return (
+    <group>
+      {/* pallet the unit rides on */}
+      <RoundedBox args={[1.05, 0.14, 1.05]} radius={0.03} position={[0, 0.07, 0]} material={palletMat} />
+      {/* metallic chassis body — grows as it moves down the line */}
+      <RoundedBox args={[0.74, h, 0.74]} radius={0.05} position={[0, 0.14 + h / 2, 0]} material={chassisMat} />
+      {/* front vent panel fitted from stage 2 */}
+      {stage >= 2 && (
+        <mesh position={[0, 0.14 + h * 0.55, 0.38]} material={screenFrameMat}>
+          <boxGeometry args={[0.5, h * 0.5, 0.03]} />
+        </mesh>
+      )}
+      {/* status LED lit once electronics go in (final stages) */}
+      {stage >= 3 && (
+        <mesh position={[0, 0.14 + h - 0.1, 0.385]} material={led}>
+          <boxGeometry args={[0.42, 0.03, 0.02]} />
+        </mesh>
+      )}
+    </group>
+  );
+}
+
+/** A jointed factory robot straddling the belt, sweeping through a welding
+ *  cycle with a pulsing accent tool-tip. `side` picks which flank it stands on. */
+function RoboticArm({ accent, side, phase }: { accent: string; side: 1 | -1; phase: number }) {
+  const shoulder = useRef<THREE.Group>(null);
+  const forearm = useRef<THREE.Group>(null);
+  const spark = useRef<THREE.PointLight>(null);
+  const led = useMemo(() => new THREE.MeshBasicMaterial({ color: accent, toneMapped: false }), [accent]);
   useFrame(({ clock }) => {
-    if (!carriers.current) return;
-    carriers.current.children.forEach((c, i) => {
-      const t = (clock.elapsedTime * 0.6 + i * 1.5) % 12;
-      c.position.x = -6 + t;
-    });
+    const t = clock.elapsedTime * 1.3 + phase;
+    if (shoulder.current) shoulder.current.rotation.x = -0.45 + Math.sin(t) * 0.26;
+    if (forearm.current) forearm.current.rotation.x = 0.65 + Math.cos(t * 1.15) * 0.3;
+    if (spark.current) spark.current.intensity = Math.sin(t * 6) > 0.55 ? 3.4 : 0.15;
   });
   return (
-    <group position={[0, 0, 2]}>
-      <mesh position={[0, 0.9, 0]} material={metalMat}>
-        <boxGeometry args={[13, 0.2, 1]} />
+    <group rotation={[0, side > 0 ? 0 : Math.PI, 0]}>
+      {/* bolted base */}
+      <mesh position={[0, 0.12, 0]} material={metalMat}>
+        <cylinderGeometry args={[0.36, 0.44, 0.24, 24]} />
       </mesh>
-      <group ref={carriers}>
-        {Array.from({ length: 5 }, (_, i) => (
-          <mesh key={i} position={[-6 + i * 2.4, 1.2, 0]} material={plinthMat}>
-            <boxGeometry args={[0.7, 0.4, 0.7]} />
+      {/* rotating column — tall enough to reach down over the chassis */}
+      <mesh position={[0, 1.05, 0]} material={gantryMat}>
+        <boxGeometry args={[0.32, 1.8, 0.32]} />
+      </mesh>
+      {/* shoulder pivot — the whole arm sweeps from here */}
+      <group ref={shoulder} position={[0, 1.98, 0]}>
+        {/* upper arm reaching over the belt (toward local −z) */}
+        <mesh position={[0, 0, -0.9]} material={metalMat}>
+          <boxGeometry args={[0.22, 0.22, 1.9]} />
+        </mesh>
+        <mesh position={[0, 0.13, -0.4]} material={led}>
+          <boxGeometry args={[0.24, 0.03, 0.5]} />
+        </mesh>
+        {/* elbow → forearm → welding head */}
+        <group ref={forearm} position={[0, 0, -1.85]}>
+          <mesh position={[0, -0.45, 0]} material={metalMat}>
+            <boxGeometry args={[0.18, 1.0, 0.18]} />
           </mesh>
+          <mesh position={[0, -0.98, 0]} material={gantryMat}>
+            <coneGeometry args={[0.1, 0.26, 16]} />
+          </mesh>
+          <mesh position={[0, -1.14, 0]} material={led}>
+            <sphereGeometry args={[0.05, 12, 12]} />
+          </mesh>
+          <pointLight ref={spark} position={[0, -1.16, 0]} color={accent} distance={3} intensity={0.15} />
+        </group>
+      </group>
+    </group>
+  );
+}
+
+/** Living assembly line (ms5 — Large Appliance Factory Visit): a structural
+ *  conveyor carrying appliance chassis at progressive build stages, flanked by
+ *  welding robots, an overhead gantry, and a quality-testing scan gate. */
+function AssemblyLine({ accent }: { accent: string }) {
+  const carriers = useRef<THREE.Group>(null);
+  const scan = useRef<THREE.Mesh>(null);
+  const BELT_LEN = 13.4;
+  const SPAN = BELT_LEN; // travel distance before a carrier recycles
+  const N = 5;
+  const specTex = useMemo(() => infoScreenTexture("ASSEMBLY LINE", "Component → finished unit", accent), [accent]);
+  const qaTex = useMemo(() => infoScreenTexture("QUALITY TESTING", "Compressor · sensors · kWh", accent), [accent]);
+  const coveMat = useMemo(() => new THREE.MeshBasicMaterial({ color: accent, toneMapped: false }), [accent]);
+  const laneMat = useMemo(
+    () => new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.3, toneMapped: false }),
+    [accent]
+  );
+
+  useFrame(({ clock }) => {
+    if (carriers.current) {
+      carriers.current.children.forEach((c, i) => {
+        const t = (clock.elapsedTime * 0.9 + (i * SPAN) / N) % SPAN;
+        c.position.x = -SPAN / 2 + t;
+      });
+    }
+    if (scan.current) {
+      const m = scan.current.material as THREE.MeshBasicMaterial;
+      m.opacity = 0.22 + (Math.sin(clock.elapsedTime * 3) * 0.5 + 0.5) * 0.4;
+    }
+  });
+
+  const legXs = [-5.5, -2.75, 0, 2.75, 5.5];
+
+  return (
+    <group position={[0, 0, 2]}>
+      {/* ---- conveyor structure ---- */}
+      {/* dark rubber belt bed */}
+      <mesh position={[0, 0.92, 0]} material={beltMat}>
+        <boxGeometry args={[BELT_LEN, 0.14, 1.7]} />
+      </mesh>
+      {/* side rails */}
+      <mesh position={[0, 0.99, 0.86]} material={gantryMat}>
+        <boxGeometry args={[BELT_LEN, 0.12, 0.1]} />
+      </mesh>
+      <mesh position={[0, 0.99, -0.86]} material={gantryMat}>
+        <boxGeometry args={[BELT_LEN, 0.12, 0.1]} />
+      </mesh>
+      {/* drum rollers at each end */}
+      {[-BELT_LEN / 2, BELT_LEN / 2].map((x) => (
+        <mesh key={x} position={[x, 0.92, 0]} rotation={[Math.PI / 2, 0, 0]} material={metalMat}>
+          <cylinderGeometry args={[0.2, 0.2, 1.72, 20]} />
+        </mesh>
+      ))}
+      {/* support legs */}
+      {legXs.map((x) =>
+        [-0.6, 0.6].map((z) => (
+          <mesh key={`${x}:${z}`} position={[x, 0.42, z]} material={gantryMat}>
+            <boxGeometry args={[0.12, 0.84, 0.12]} />
+          </mesh>
+        ))
+      )}
+
+      {/* ---- chassis riding the belt ---- */}
+      <group ref={carriers}>
+        {Array.from({ length: N }, (_, i) => (
+          <group key={i} position={[-SPAN / 2 + (i * SPAN) / N, 0.99, 0]}>
+            <Chassis accent={accent} stage={i} />
+          </group>
         ))}
       </group>
-      {/* overhead cove light */}
-      <mesh position={[0, 3.4, 0]}>
-        <boxGeometry args={[13, 0.06, 0.06]} />
-        <meshBasicMaterial color={accent} toneMapped={false} />
+
+      {/* ---- welding robots on the back flank, arcing forward over the line ---- */}
+      <group position={[-2.6, 0, -1.7]}>
+        <RoboticArm accent={accent} side={-1} phase={0} />
+      </group>
+      <group position={[1.9, 0, -1.7]}>
+        <RoboticArm accent={accent} side={-1} phase={1.7} />
+      </group>
+
+      {/* ---- overhead gantry truss (the accent cove now mounts to it) ---- */}
+      <mesh position={[-6.7, 1.9, 0]} material={gantryMat}>
+        <boxGeometry args={[0.18, 3.8, 0.18]} />
       </mesh>
+      <mesh position={[6.7, 1.9, 0]} material={gantryMat}>
+        <boxGeometry args={[0.18, 3.8, 0.18]} />
+      </mesh>
+      <mesh position={[0, 3.7, 0]} material={gantryMat}>
+        <boxGeometry args={[13.8, 0.18, 0.18]} />
+      </mesh>
+      {/* accent cove strip along the underside of the beam */}
+      <mesh position={[0, 3.55, 0]} material={coveMat}>
+        <boxGeometry args={[13, 0.05, 0.05]} />
+      </mesh>
+
+      {/* ---- quality-testing scan gate near the exit ---- */}
+      <group position={[5.0, 0, 0]}>
+        <mesh position={[0, 1.05, 1.0]} material={gantryMat}>
+          <boxGeometry args={[0.14, 2.1, 0.14]} />
+        </mesh>
+        <mesh position={[0, 1.05, -1.0]} material={gantryMat}>
+          <boxGeometry args={[0.14, 2.1, 0.14]} />
+        </mesh>
+        <mesh position={[0, 2.05, 0]} material={gantryMat}>
+          <boxGeometry args={[0.14, 0.14, 2.1]} />
+        </mesh>
+        {/* sweeping scan plane */}
+        <mesh ref={scan} position={[0, 1.05, 0]} rotation={[0, Math.PI / 2, 0]}>
+          <planeGeometry args={[1.9, 1.7]} />
+          <meshBasicMaterial
+            color={accent}
+            transparent
+            opacity={0.3}
+            toneMapped={false}
+            side={THREE.DoubleSide}
+            blending={THREE.AdditiveBlending}
+            depthWrite={false}
+          />
+        </mesh>
+      </group>
+
+      {/* ---- backlit signage on the gantry ---- */}
+      {[
+        { x: -3.6, tex: specTex },
+        { x: 3.4, tex: qaTex },
+      ].map(({ x, tex }) => (
+        <group key={x} position={[x, 2.7, -1.55]}>
+          <mesh material={screenFrameMat}>
+            <boxGeometry args={[2.1, 1.28, 0.06]} />
+          </mesh>
+          <mesh position={[0, 0, 0.032]}>
+            <planeGeometry args={[1.98, 1.16]} />
+            <meshBasicMaterial map={tex} toneMapped={false} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* ---- painted floor safety lanes ---- */}
+      {[-1.35, 1.35].map((z) => (
+        <mesh key={z} position={[0, 0.02, z]} rotation={[-Math.PI / 2, 0, 0]} material={laneMat}>
+          <planeGeometry args={[BELT_LEN + 1, 0.09]} />
+        </mesh>
+      ))}
+
+      {/* accent fill so the machinery reads against the dark bay */}
+      <pointLight position={[0, 2.4, 1.4]} color={accent} distance={11} intensity={1.6} />
+      <pointLight position={[4.8, 1.8, 0]} color={accent} distance={6} intensity={1.4} />
     </group>
   );
 }
@@ -341,9 +539,12 @@ export function MilestoneEnvironment({ index }: { index: number }) {
 
       <EnvironmentSet env={m.env} accent={accent} index={index} products={products} />
 
-      {/* product row — skipped for the experience zone, whose stations display
-          their own products on the table tops */}
+      {/* product row — skipped for environments that stage their own products:
+          the experience zone (products sit on its station tops) and the
+          assembly line (the belt's chassis are the appliances being built, so a
+          duplicate floor row of the AC units just reads as leftover pre-heat props) */}
       {m.env !== "experience-zone" &&
+        m.env !== "assembly-line" &&
         products.map((p, i) => {
           const n = products.length;
           const x = (i - (n - 1) / 2) * 2.2;
